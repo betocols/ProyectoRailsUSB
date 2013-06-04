@@ -1,0 +1,17 @@
+<%= semantic_form_for @comment_a do |f| %>
+  <% if @comment_a.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@comment_a.errors.count, "error") %> prohibited this comment_a from being saved:</h2>
+
+      <ul>
+      <% @comment_a.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

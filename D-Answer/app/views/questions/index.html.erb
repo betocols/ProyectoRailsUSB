@@ -1,0 +1,58 @@
+<style>
+  table {
+    margin:20px auto; 
+    border-collapse:collapse;
+  }
+
+  table, td, th {
+    border:1px solid black;
+  }
+
+  th { 
+    padding:5px;
+    background-color:#2066ce;
+    color:white;
+  }
+
+  .boton {
+    border:1px solid black;
+    text-align:center;
+    background-color: #2066ce;
+    padding:3px;
+    color:white;
+  }
+
+  .fl {
+    float:left;
+  }
+
+  #wrapper {
+    width:800px;
+    margin:auto;
+  }
+</style>
+
+
+<h1 style="text-align:center">Listado de Preguntas</h1>
+
+
+<%= link_to 'Nueva Pregunta', new_question_path, :class => 'boton', :style => 'margin-left:605px' %>
+
+
+<table>
+  <tr>
+    <th>Título</th>
+    <th>Mostrar</th>
+    <th>Editar</th>
+    <th>Eliminar</th>
+  </tr>
+
+  <% @questions.each do |question| %>
+  <tr>
+      <td style="text-align:center;width:70%;max-width: 50px;padding:2px"><%= question.title %></td>
+      <td style="text-align:center"><%= link_to 'Show', question %></td>
+      <td style="text-align:center"><%= link_to 'Edit', edit_question_path(question) %></td>
+      <td style="text-align:center"><%= link_to 'Destroy', question, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+    </tr>
+  <% end %>
+</table>

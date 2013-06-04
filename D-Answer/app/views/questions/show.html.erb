@@ -1,0 +1,86 @@
+<style>
+  table {
+    margin:20px; 
+    border-collapse:collapse;
+  }
+
+  td, th {
+    padding:10px;
+  }
+
+  th { 
+    padding:5px;
+    background-color:#2066ce;
+    color:white;
+  }
+
+  .boton {
+    border:1px solid black;
+    text-align:center;
+    background-color: #2066ce;
+    padding:3px;
+    color:white;
+  }
+
+  .fl {
+    float:left;
+  }
+
+  #wrapper {
+    width:800px;
+    margin:auto;
+  }
+</style>
+
+
+<h2>Pregunta: <%= @question.title %></h2>
+<%= link_to 'Editar', edit_question_path(@question), :class => 'boton' %>
+<%= link_to 'Volver', questions_path, :class => 'boton' %>
+<table>
+  <tr>
+    <td>
+      <b> Categoría: </b>
+    </td>
+    <td>  
+      <%= @question.category %>
+    </td>
+  </tr>
+  <%= @question.created_at %>
+  <tr>
+    <td style="vertical-align: top;">
+      <b> Pregunta: </b>
+    </td>
+    <td style="text-align:justify;">  
+      <%= @question.content %>
+    </td>
+  </tr>
+</table>
+
+
+<h2>Comentarios: </h2>
+<% @question.comment_qs.each do |c| %>
+  <li><p>
+    <%= c.content %>
+  </p>
+</li>
+<% end %>
+
+
+<h2>Responder:</h2>
+<%= form_for [@question, @question.answers.build] do |f| %>
+  <div class="field">
+    <%= f.label :content %><br />
+    <%= f.text_field :content %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
+
+<h2>Respuestas: </h2>
+<% @question.answers.each do |c| %>
+  </t><li><p>
+    <%= c.content %>
+  </p>
+</li>
+<% end %>

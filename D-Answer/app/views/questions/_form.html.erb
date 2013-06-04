@@ -1,0 +1,87 @@
+<style>
+  table {
+    margin:20px auto; 
+    border-collapse:collapse;
+  }
+
+  table, td, th {
+    padding:15px;
+  }
+  
+  td {
+    width:200px;
+  }
+  th { 
+    padding:5px;
+    background-color:green;
+    color:white;
+  }
+
+  .boton {
+    border:1px solid black;
+    text-align:center;
+    background-color: #2066ce;
+    padding:3px;
+    font-weight: bold !important;
+    color:white;
+  }
+
+  .fl {
+    float:left;
+  }
+
+  #wrapper {
+    width:800px;
+    margin:auto;
+  }
+  
+  .formtastic {
+    list-style:none;
+    margin-left: 50px;
+  }
+</style>
+
+
+<%= semantic_form_for @question do |f| %>
+  <% if @question.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@question.errors.count, "error") %> prohibited this question from being saved:</h2>
+
+      <ul>
+      <% @question.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <table style="margin:auto">
+    <tr>
+      <td>
+        <b> TÍTULO </b>
+        <%= f.input :title, :label => false, :input_html => { :size => 60 } %>
+      </td>
+    </tr>  
+
+    <tr>
+      <td>
+        <b> CATEGORÍA </b>
+        <%= f.input :category, :label => false, :input_html => { :size => 60 } %>
+      <td>
+    </tr>  
+
+    <tr>
+      <td>
+        <b> CONTENIDO </b>
+        <%= f.input :content, :as => :text, :label => false, :input_html => { :rows => 20, :cols => 100 } %>
+      </td>
+    </tr>  
+
+    </tr>
+  </table>
+  
+  <div class="actions", style="margin:auto;text-align: center;margin-top:20px">
+    <%= f.submit %>
+  </div>
+  
+<% end %>
