@@ -40,12 +40,14 @@ class CommentQsController < ApplicationController
   # POST /comment_qs
   # POST /comment_qs.json
   def create
-    @comment_q = CommentQ.new(params[:comment_q])
+    @question = Question.find(params[:question_id])
+    @commentq = @question.comment_qs.new(params[:comment_q])
+    @commentq.user = current_user
 
     respond_to do |format|
-      if @comment_q.save
-        format.html { redirect_to @comment_q, notice: 'Comment q was successfully created.' }
-        format.json { render json: @comment_q, status: :created, location: @comment_q }
+      if @commentq.save
+        format.html { redirect_to @question, notice: 'Comment q was successfully created.' }
+        format.json { render json: @question, status: :created, location: @comment_q }
       else
         format.html { render action: "new" }
         format.json { render json: @comment_q.errors, status: :unprocessable_entity }
@@ -72,12 +74,14 @@ class CommentQsController < ApplicationController
   # DELETE /comment_qs/1
   # DELETE /comment_qs/1.json
   def destroy
-    @comment_q = CommentQ.find(params[:id])
+    @question = Question.find(params[:question_id])
+    @comment_q = @question.comment_qs.find(params[:id])
     @comment_q.destroy
 
     respond_to do |format|
-      format.html { redirect_to comment_qs_url }
+      format.html { redirect_to @question }
       format.json { head :no_content }
     end
   end
+
 end

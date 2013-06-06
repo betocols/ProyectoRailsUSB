@@ -8,10 +8,10 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
   
-  has_many :questions, :class_name => "Question", :inverse_of => :user
-  has_many :answers, :class_name => "Answer", :inverse_of => :user
-  has_many :commentqs, :class_name => "CommentQ", :inverse_of => :user
-  has_many :commentas, :class_name => "CommentA", :inverse_of => :user
+  has_many :questions, :class_name => "Question"
+  has_many :answers, :class_name => "Answer"
+  has_many :commentqs, :class_name => "CommentQ"
+  has_many :commentas, :class_name => "CommentA"
   
   include RoleModel 
   roles :admin, :user

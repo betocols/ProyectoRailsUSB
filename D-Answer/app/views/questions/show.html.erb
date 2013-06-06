@@ -19,7 +19,7 @@
     text-align:center;
     background-color: #2066ce;
     padding:3px;
-    color:white;
+    color:white !important;
   }
 
   .fl {
@@ -34,6 +34,7 @@
 
 
 <h2>Pregunta: <%= @question.title %></h2>
+<%= @question.created_at %><p>
 <%= link_to 'Editar', edit_question_path(@question), :class => 'boton' %>
 <%= link_to 'Volver', questions_path, :class => 'boton' %>
 <table>
@@ -45,7 +46,6 @@
       <%= @question.category %>
     </td>
   </tr>
-  <%= @question.created_at %>
   <tr>
     <td style="vertical-align: top;">
       <b> Pregunta: </b>
@@ -56,14 +56,31 @@
   </tr>
 </table>
 
+<div style="border">
+  <div style="font-size:small;margin-left:120px">
+    <h2>Comentarios: </h2>
+    <% @question.comment_qs.each do |c| %>
+      <% if c.content %>
+        <li>
+          <p>
+            <%= c.content %>
+            ->Usuario: <%= c.user.email %>
+            <%= link_to 'Destroy', [@question, c], method: :delete, :class => 'boton', data: { confirm: 'Are you sure?'}%>
+          </p>
+        </li>
+      <% end %>
+    <% end %>
 
-<h2>Comentarios: </h2>
-<% @question.comment_qs.each do |c| %>
-  <li><p>
-    <%= c.content %>
-  </p>
-</li>
-<% end %>
+    <%= form_for [@question, @question.comment_qs.build] do |f| %>
+      <div class="field">
+        <%= f.text_area :content, :cols => 70, :rows => 5, :placeholder => "Agrega un comentario." %>
+      </div>
+      <div class="actions">
+        <%= f.submit %>
+      </div>
+    <% end %>
+  </div>
+</div>
 
 
 <h2>Responder:</h2>
@@ -71,6 +88,7 @@
   <div class="field">
     <%= f.label :content %><br />
     <%= f.text_field :content %>
+
   </div>
   <div class="actions">
     <%= f.submit %>
@@ -79,8 +97,14 @@
 
 <h2>Respuestas: </h2>
 <% @question.answers.each do |c| %>
-  </t><li><p>
-    <%= c.content %>
-  </p>
+  <% if c.content %>
+    <p><li><p>
+      <%= c.content %>
+      <% if c.user_id == current_user.id %>
+        ->Usuario: <%= c.user.email %>
+      <% end %>
+      <%= link_to 'Destroy', [@question, c], method: :delete, :class => 'boton', data: { confirm: 'Are you sure?'}%>
+    </p>
+  <% end %>
 </li>
 <% end %>

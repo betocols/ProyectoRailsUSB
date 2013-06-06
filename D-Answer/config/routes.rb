@@ -5,10 +5,10 @@ DAnswer::Application.routes.draw do
   devise_for :users
 
   resources :questions do
+    resources :comment_qs
     resources :answers do
-      resource :commentas 
+      resource :comment_as 
     end
-    resources :commentqs
   end
     
   # The priority is based upon order of creation:

@@ -13,3 +13,13 @@
  */
 
 
+
+
+a {
+  text-decoration: none;
+  color:#159;
+}
+
+a:visited {
+  color:#159;
+}

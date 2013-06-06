@@ -41,10 +41,12 @@ class AnswersController < ApplicationController
   # POST /answers.json
   def create
     @question = Question.find(params[:question_id])
-    @answer = Answer.new(params[:answer])
-
+    @answer = @question.answers.new(params[:answer])
+    @answer.user = current_user
+    
     respond_to do |format|
-      if @question.answers.create(params[:answer])
+      if @answer.save
+        
         format.html { redirect_to @question, notice: 'Answer was successfully created.' }
         format.json { render json: @question, status: :created, location: @answer }
       else
@@ -73,11 +75,12 @@ class AnswersController < ApplicationController
   # DELETE /answers/1
   # DELETE /answers/1.json
   def destroy
-    @answer = Answer.find(params[:id])
+    @question = Question.find(params[:question_id])
+    @answer = @question.answers.find(params[:id])
     @answer.destroy
 
     respond_to do |format|
-      format.html { redirect_to answers_url }
+      format.html { redirect_to @question }
       format.json { head :no_content }
     end
   end
