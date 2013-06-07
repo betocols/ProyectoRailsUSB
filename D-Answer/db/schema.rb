@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130526212245) do
+ActiveRecord::Schema.define(:version => 20130606192241) do
 
   create_table "answers", :force => true do |t|
     t.integer  "user_id"
@@ -79,6 +79,10 @@ ActiveRecord::Schema.define(:version => 20130526212245) do
     t.decimal  "rating"
     t.string   "role"
     t.integer  "roles_mask"
+    t.string   "login"
+    t.string   "name"
+    t.string   "lastname"
+    t.integer  "score"
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true

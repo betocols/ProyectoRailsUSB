@@ -1,4 +1,5 @@
 class CommentQsController < ApplicationController
+  before_filter :authenticate_user!, :only => [:new, :create, :destroy] #Para que se requiera estar logueado
   # GET /comment_qs
   # GET /comment_qs.json
   def index

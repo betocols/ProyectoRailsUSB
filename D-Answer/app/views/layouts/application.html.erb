@@ -14,8 +14,24 @@
   }
 
   #wrapper {
-    width:800px;
+    width: 1000px;
     margin:auto;
+    margin-top:0;
+    height:100%;
+    border-left:1px solid gray;
+    border-right: 1px solid gray;
+    background-color : white;
+    padding:20px;
+  }
+
+  html {
+    background-color : #133a6b;
+    height:100%;
+  }
+
+  body {
+    height:100%;
+    margin-top:0;
   }
 </style>
 <html>
@@ -31,12 +47,18 @@
       <% if user_signed_in? %> 
 
         <div style="float:left;margin-right:10px">
-          Bienvenido, <%= current_user.email %>
+          Bienvenido, <%= current_user.login %>
         </div>
       
         <div style="float:right">
           <%= link_to 'Log out', destroy_user_session_path, :method => :delete, :class => 'boton fl' %>
         </div>
+      <% else %>
+        <%= link_to "Sign in", new_session_path(:user) %><br />
+        <div> No estas registrado? Registrate y comienza a preguntar!
+        <%= link_to "Sign up", new_registration_path(:user) %><br />
+
+      </div>
       <% end %>
     </div>    
     <p class="notice"><%= notice %></p>

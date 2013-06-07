@@ -13,11 +13,14 @@ class User < ActiveRecord::Base
   has_many :commentqs, :class_name => "CommentQ"
   has_many :commentas, :class_name => "CommentA"
   
+  ROLES = %w[admin user]
+
   include RoleModel 
   roles :admin, :user
   
   # Setup accessible (or protected) attributes for your model
   attr_accessible :email, :password, :password_confirmation, :remember_me
+  attr_accessible :login, :name, :lastname, :bio, :rating, :role
     
   # optionally set the integer attribute to store the roles in,
   # :roles_mask is the default

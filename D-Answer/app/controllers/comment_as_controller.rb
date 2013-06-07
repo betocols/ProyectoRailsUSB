@@ -1,4 +1,5 @@
 class CommentAsController < ApplicationController
+  before_filter :authenticate_user!, :only => [:new, :create, :destroy]
   # GET /comment_as
   # GET /comment_as.json
   def index

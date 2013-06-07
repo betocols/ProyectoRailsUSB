@@ -26,10 +26,6 @@
     float:left;
   }
 
-  #wrapper {
-    width:800px;
-    margin:auto;
-  }
 </style>
 
 
@@ -64,7 +60,6 @@
         <li>
           <p>
             <%= c.content %>
-            ->Usuario: <%= c.user.email %>
             <%= link_to 'Destroy', [@question, c], method: :delete, :class => 'boton', data: { confirm: 'Are you sure?'}%>
           </p>
         </li>
@@ -83,28 +78,24 @@
 </div>
 
 
-<h2>Responder:</h2>
-<%= form_for [@question, @question.answers.build] do |f| %>
-  <div class="field">
-    <%= f.label :content %><br />
-    <%= f.text_field :content %>
-
-  </div>
-  <div class="actions">
-    <%= f.submit %>
-  </div>
-<% end %>
-
 <h2>Respuestas: </h2>
 <% @question.answers.each do |c| %>
   <% if c.content %>
     <p><li><p>
       <%= c.content %>
-      <% if c.user_id == current_user.id %>
-        ->Usuario: <%= c.user.email %>
-      <% end %>
       <%= link_to 'Destroy', [@question, c], method: :delete, :class => 'boton', data: { confirm: 'Are you sure?'}%>
     </p>
   <% end %>
 </li>
+<% end %>
+
+<%= form_for [@question, @question.answers.build] do |f| %>
+  <div class="field">
+    <%= f.label :content %><br />
+    <%= f.text_area :content, :cols => 70, :rows => 5, :placeholder => "Responde la pregunta." %>
+
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
 <% end %>

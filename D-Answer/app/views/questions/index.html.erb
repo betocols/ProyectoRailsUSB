@@ -26,10 +26,6 @@
     float:left;
   }
 
-  #wrapper {
-    width:800px;
-    margin:auto;
-  }
 </style>
 
 <script>
@@ -48,14 +44,15 @@
 <%= link_to 'Nueva Pregunta', new_question_path, :class => 'boton', :style => 'margin-left:605px' %>
 
 <div id="todas">
-<button type="button" class="boton" onclick="show('actual');hide('todas')">Mis Preguntas</button>
+<% if user_signed_in? %>
+  <button type="button" class="boton" onclick="show('actual');hide('todas')">Mis Preguntas</button>
+<% end %>
 <h1 style="text-align:center">Listado de Preguntas</h1>
 
-  <table>
+  <table style="min-width:646px">
     <tr>
       <th>Título</th>
       <th>Mostrar</th>
-      <th>Editar</th>
       <th>Eliminar</th>
     </tr>
 
@@ -63,7 +60,6 @@
     <tr>
         <td style="text-align:center;width:70%;max-width: 50px;padding:2px"><%= question.title %></td>
         <td style="text-align:center"><%= link_to 'Show', question %></td>
-        <td style="text-align:center"><%= link_to 'Edit', edit_question_path(question) %></td>
         <td style="text-align:center"><%= link_to 'Destroy', question, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
@@ -71,26 +67,28 @@
 </div>
 
 <div id="actual" style="display:none">
-<button type="button" class="boton" onclick="show('todas');hide('actual')">Todas las Preguntas</button>
-<h1 style="text-align:center">Mis Preguntas</h1>
+<% if user_signed_in? %>
+  <button type="button" class="boton" onclick="show('todas');hide('actual')">Todas las Preguntas</button>
+  <h1 style="text-align:center">Mis Preguntas</h1>
 
-  <table style="min-width:646px">
-    <tr>
-      <th>Título</th>
-      <th>Mostrar</th>
-      <th>Editar</th>
-      <th>Eliminar</th>
-    </tr>
-
-    <% @questions.each do |question| %>
-      <% if question.user_id == current_user.id %>
-        <tr>
-          <td style="text-align:center;width:70%;max-width: 50px;padding:2px"><%= question.title %></td>
-          <td style="text-align:center"><%= link_to 'Show', question %></td>
-          <td style="text-align:center"><%= link_to 'Edit', edit_question_path(question) %></td>
-          <td style="text-align:center"><%= link_to 'Destroy', question, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-        </tr>
-      <% end %>
-    <% end %>
-  </table>
+    <table style="min-width:646px">
+        <% preguntas = Question.where(:user_id => current_user.id) %>
+        <% if  !preguntas.blank? %>
+            <tr>
+              <th>Título</th>
+              <th>Mostrar</th>
+              <th>Eliminar</th>
+            </tr>
+          <% preguntas.each do |question| %>
+            <tr>
+              <td style="text-align:center;width:70%;max-width: 50px;padding:2px"><%= question.title %></td>
+              <td style="text-align:center"><%= link_to 'Show', question %></td>
+              <td style="text-align:center"><%= link_to 'Destroy', question, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+            </tr>
+          <% end %>
+        <% else %>
+          NO TIENES PREGUNTAS
+        <% end %>
+    </table>
+  <% end %>
 </div>

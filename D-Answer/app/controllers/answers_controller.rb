@@ -1,4 +1,5 @@
 class AnswersController < ApplicationController
+  before_filter :authenticate_usuario!, :only => [:new, :create, :destroy]
   # GET /answers
   # GET /answers.json
   def index
@@ -43,7 +44,7 @@ class AnswersController < ApplicationController
     @question = Question.find(params[:question_id])
     @answer = @question.answers.new(params[:answer])
     @answer.user = current_user
-    
+
     respond_to do |format|
       if @answer.save
         

@@ -1,5 +1,6 @@
 #encoding: UTF-8
 class UsersController < ApplicationController
+  before_filter :authenticate_user!, :only => [:new, :create, :destroy, :show] 
   # GET /users
   # GET /users.json
   def index

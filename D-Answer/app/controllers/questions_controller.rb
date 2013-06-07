@@ -1,4 +1,5 @@
 class QuestionsController < ApplicationController
+before_filter :authenticate_user!, :only => [:new, :create, :destroy]
   # GET /questions
   # GET /questions.json
   def index

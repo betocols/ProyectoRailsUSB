@@ -4,6 +4,8 @@ DAnswer::Application.routes.draw do
 
   devise_for :users
 
+  resources :users
+  
   resources :questions do
     resources :comment_qs
     resources :answers do
