@@ -1,5 +1,5 @@
 class AnswersController < ApplicationController
-  before_filter :authenticate_usuario!, :only => [:new, :create, :destroy]
+  before_filter :authenticate_user!, :only => [:new, :create, :destroy]
   # GET /answers
   # GET /answers.json
   def index
