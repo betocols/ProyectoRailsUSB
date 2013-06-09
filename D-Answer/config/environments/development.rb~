@@ -43,7 +43,6 @@ DAnswer::Application.configure do
   
   config.action_mailer.perform_deliveries = true #default value
   config.action_mailer.delivery_method = :smtp #default value
-  config.action_mailer.perform_deliveries = true
   
   # Mails
   config.action_mailer.smtp_settings = {

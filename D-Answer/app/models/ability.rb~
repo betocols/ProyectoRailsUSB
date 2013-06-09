@@ -3,10 +3,10 @@ class Ability
 
   def initialize(user)
     user ||= User.new
-    if user.role=="admin"
+    if user.role==:admin
         can [:read, :update, :destroy], [User, Tutorial]
         can [:read, :destroy], Question
-    else user.role=="user"
+    else user.role==:user
         can [:create, :read], [Question, Answer, Comment]
         can :update, Answer
     end
