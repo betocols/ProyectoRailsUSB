@@ -49,6 +49,3 @@ gem 'role_model'
 # Para los forms
 gem 'formalize-rails'
 gem 'formtastic'
-
-#Para los mails
-gem 'mail'

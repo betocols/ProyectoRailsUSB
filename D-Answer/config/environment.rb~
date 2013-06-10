@@ -1,0 +1,16 @@
+# Load the rails application
+require File.expand_path('../application', __FILE__)
+
+# Initialize the rails application
+DAnswer::Application.initialize!
+
+# Mails
+ActionMailer::Base.delivery_method =:smtp
+ActionMailer::Base.smtp_settings = {
+ :address => "mail.hotmail.com",
+ :port => "587",
+ :domain => "hotmail.com",
+ :authentication => :plain,
+ :user_name => "sonisds@hotmail.com",
+ :password => "200660"
+}
