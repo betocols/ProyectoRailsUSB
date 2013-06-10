@@ -27,4 +27,9 @@ class User < ActiveRecord::Base
   roles_attribute :roles_mask
   
   #validates_numericality_of :rating
+  VALID_STRING_REGEX = /\A[\w+\-\ .]*\z/
+  validates :login, presence: true, uniqueness: true, format: { with: VALID_STRING_REGEX }
+  validates :name, format: { with: VALID_STRING_REGEX }
+  validates :lastname, format: { with: VALID_STRING_REGEX }
+  validates :password, format: { with: VALID_STRING_REGEX }
 end

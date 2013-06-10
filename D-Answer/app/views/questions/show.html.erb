@@ -54,7 +54,7 @@
 
 <div style="border">
   <div style="font-size:small;margin-left:120px">
-    <h2>Comentarios: </h2>
+    <h2>Comentarios </h2>
     <% @question.comment_qs.each do |c| %>
       <% if c.content %>
         <li>
@@ -78,7 +78,7 @@
 </div>
 
 
-<h2>Respuestas: </h2>
+<h2>Respuestas </h2>
 <% @question.answers.each do |c| %>
   <% if c.content %>
     <p><li><p>
