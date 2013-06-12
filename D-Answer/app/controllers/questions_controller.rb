@@ -3,7 +3,7 @@ before_filter :authenticate_user!, :only => [:new, :create, :destroy]
   # GET /questions
   # GET /questions.json
   def index
-    @questions = Question.all
+    @questions = Question.search(params[:search])
 
     respond_to do |format|
       format.html # index.html.erb
@@ -15,8 +15,6 @@ before_filter :authenticate_user!, :only => [:new, :create, :destroy]
   # GET /questions/1.json
   def show
     @question = Question.find(params[:id])
-    
-    
 
     respond_to do |format|
       format.html # show.html.erb

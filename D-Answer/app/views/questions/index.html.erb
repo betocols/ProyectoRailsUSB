@@ -53,9 +53,6 @@
     }
 </script>
 
-
-
-
 <%= link_to 'Nueva Pregunta', new_question_path, :class => 'boton', :style => 'margin-left:605px' %>
 
 <div id="todas">
@@ -63,6 +60,13 @@
   <button type="button" class="boton" onclick="show('actual');hide('todas')">Mis Preguntas</button>
 <% end %>
 <h1 style="text-align:center">Listado de Preguntas</h1>
+
+
+<%= form_tag questions_path, :method => 'get', :id => "questions_search" do %>
+  <p>
+    <%= text_field_tag :search, params[:search] %>
+    <%= submit_tag "Search", :name => nil %>
+  </p>
 
   <table style="min-width:646px">
     <tr>
@@ -79,6 +83,7 @@
       </tr>
     <% end %>
   </table>
+<% end %>
 </div>
 
 <div id="actual" style="display:none">
@@ -86,6 +91,12 @@
   <button type="button" class="boton" onclick="show('todas');hide('actual')">Todas las Preguntas</button>
   <h1 style="text-align:center">Mis Preguntas</h1>
 
+<%= form_tag questions_path, :method => 'get', :id => "questions_search" do %>
+  <p>
+    <%= text_field_tag :search, params[:search] %>
+    <%= submit_tag "Search", :name => nil %>
+  </p>
+  
     <table style="min-width:646px">
         <% preguntas = Question.where(:user_id => current_user.id) %>
         <% if  !preguntas.blank? %>
@@ -106,4 +117,5 @@
         <% end %>
     </table>
   <% end %>
+<%end%>
 </div>
