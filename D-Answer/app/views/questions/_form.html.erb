@@ -38,6 +38,7 @@
 
 
 <%= semantic_form_for @question do |f| %>
+  
   <% if @question.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@question.errors.count, "error") %> prohibited this question from being saved:</h2>
@@ -50,6 +51,8 @@
     </div>
   <% end %>
 
+  <%= hidden_field_tag :direction, params[:direction] %>
+  <%= hidden_field_tag :sort, params[:sort] %>
   <table style="margin:auto">
     <tr>
       <td>
