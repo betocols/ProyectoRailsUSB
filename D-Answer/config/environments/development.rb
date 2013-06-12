@@ -39,20 +39,14 @@ DAnswer::Application.configure do
   config.action_mailer.default_url_options = { :host => 'localhost:3000' }
   
   #Para errores con los mails
-  config.action_mailer.raise_delivery_errors = true
-  
-  config.action_mailer.perform_deliveries = true #default value
-  config.action_mailer.delivery_method = :smtp #default value
-  config.action_mailer.perform_deliveries = true
-  
-  # Mails
+  config.action_mailer.delivery_method = :smtp 
   config.action_mailer.smtp_settings = {
     :address => "mail.gmail.com",
     :port => "587",
-    :domain => "hotmail.com",
+    :domain => "gmail.com",
     :authentication => :plain,
-    :user_name => "origds@gmail.com",
-    :password => "origds1992"
+    :user_name => "danswerusb@gmail.com",
+    :password => "proyectorailsusb"
   }
   
 end
