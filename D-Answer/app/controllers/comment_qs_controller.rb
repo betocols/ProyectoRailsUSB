@@ -44,9 +44,11 @@ class CommentQsController < ApplicationController
     @question = Question.find(params[:question_id])
     @commentq = @question.comment_qs.new(params[:comment_q])
     @commentq.user = current_user
+    @user = User.find(@question.user_id)
 
     respond_to do |format|
       if @commentq.save
+        UserMailer.commentqs_email(@user, @question).deliver
         format.html { redirect_to @question, notice: 'Comment q was successfully created.' }
         format.json { render json: @question, status: :created, location: @comment_q }
       else

@@ -48,7 +48,6 @@ class AnswersController < ApplicationController
 
     respond_to do |format|
       if @answer.save
-        
         UserMailer.answer_email(@user, @question).deliver
         format.html { redirect_to @question, notice: 'Answer was successfully created.' }
         format.json { render json: @question, status: :created, location: @answer }
