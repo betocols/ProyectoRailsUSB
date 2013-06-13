@@ -13,4 +13,13 @@ class Question < ActiveRecord::Base
 
   validates :title, presence: true, uniqueness: true, format: { with: VALID_STRING_REGEX }
   validates :content, presence: true, format: { with: VALID_STRING_REGEX }
+  
+  def self.search(search)
+    if search
+      find(:all, :conditions => ['title LIKE ?', "%#{search}%"])
+    else
+      find(:all)
+    end
+  end
+
 end

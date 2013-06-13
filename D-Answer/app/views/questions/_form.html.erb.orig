@@ -12,9 +12,13 @@
     </div>
   <% end %>
 
+<<<<<<< HEAD
   <table class="create_question">
+=======
   <%= hidden_field_tag :direction, params[:direction] %>
   <%= hidden_field_tag :sort, params[:sort] %>
+  <table style="margin:auto">
+>>>>>>> 9f8a16527161fe69dad6974968776bfbf58d3983
     <tr>
       <td>
         <spam style="margin-left:10px">

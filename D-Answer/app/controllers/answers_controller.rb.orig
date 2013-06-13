@@ -44,8 +44,13 @@ class AnswersController < ApplicationController
     @question = Question.find(params[:question_id])
     @answer = @question.answers.new(params[:answer])
     @answer.user = current_user
+<<<<<<< HEAD
     @answer.score = 0
     
+=======
+    @user = User.find(@question.user_id)
+
+>>>>>>> 9f8a16527161fe69dad6974968776bfbf58d3983
     respond_to do |format|
       if @answer.save
         UserMailer.answer_email(@user, @question).deliver

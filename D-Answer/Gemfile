@@ -52,3 +52,6 @@ gem 'formtastic'
 
 #Para los mails
 gem 'mail'
+
+#Para la paginacion y la busqueda
+gem 'will_paginate'
