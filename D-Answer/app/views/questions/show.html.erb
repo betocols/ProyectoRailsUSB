@@ -34,7 +34,7 @@
         <b> Tags: </b>
       </td>
       <td>  
-        <%= @question.category %>
+        <%= raw @question.tag_list.map { |t| link_to t, tag_path(t)}.join(', ') %>
       </td>
     </tr>
     <tr>

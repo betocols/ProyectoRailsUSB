@@ -3,7 +3,11 @@ before_filter :authenticate_user!, :only => [:new, :create, :destroy]
   # GET /questions
   # GET /questions.json
   def index
-    @questions = Question.search(params[:search])
+    if params[:tag]
+      @questions = Question.tagged_with(params[:tag])
+    else
+      @questions = Question.search(params[:search])
+    end
 
     respond_to do |format|
       format.html # index.html.erb
