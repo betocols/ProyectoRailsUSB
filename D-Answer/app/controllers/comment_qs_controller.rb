@@ -15,6 +15,7 @@ class CommentQsController < ApplicationController
   # GET /comment_qs/1.json
   def show
     @comment_q = CommentQ.find(params[:id])
+    authorize! :read, @comment_q
 
     respond_to do |format|
       format.html # show.html.erb
@@ -26,6 +27,7 @@ class CommentQsController < ApplicationController
   # GET /comment_qs/new.json
   def new
     @comment_q = CommentQ.new
+    authorize! :create, @comment_q
 
     respond_to do |format|
       format.html # new.html.erb
@@ -36,6 +38,7 @@ class CommentQsController < ApplicationController
   # GET /comment_qs/1/edit
   def edit
     @comment_q = CommentQ.find(params[:id])
+    authorize! :update, @comment_q
   end
 
   # POST /comment_qs
@@ -79,6 +82,7 @@ class CommentQsController < ApplicationController
   def destroy
     @question = Question.find(params[:question_id])
     @comment_q = @question.comment_qs.find(params[:id])
+    authorize! :destroy, @comment_q
     @comment_q.destroy
 
     respond_to do |format|

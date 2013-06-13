@@ -15,6 +15,7 @@ class AnswersController < ApplicationController
   # GET /answers/1.json
   def show
     @answer = Answer.find(params[:id])
+    authorize! :read, @answer
 
     respond_to do |format|
       format.html # show.html.erb
@@ -26,6 +27,7 @@ class AnswersController < ApplicationController
   # GET /answers/new.json
   def new
     @answer = Answer.new
+    authorize! :create, @answer
 
     respond_to do |format|
       format.html # new.html.erb
@@ -36,6 +38,7 @@ class AnswersController < ApplicationController
   # GET /answers/1/edit
   def edit
     @answer = Answer.find(params[:id])
+    authorize! :update, @answer
   end
 
   # POST /answers
@@ -79,6 +82,7 @@ class AnswersController < ApplicationController
   def destroy
     @question = Question.find(params[:question_id])
     @answer = @question.answers.find(params[:id])
+    authorize! :destroy, @answer
     @answer.destroy
 
     respond_to do |format|
