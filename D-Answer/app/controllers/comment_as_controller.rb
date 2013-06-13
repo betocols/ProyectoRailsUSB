@@ -15,6 +15,7 @@ class CommentAsController < ApplicationController
   # GET /comment_as/1.json
   def show
     @comment_a = CommentA.find(params[:id])
+    authorize! :read, @comment_a
 
     respond_to do |format|
       format.html # show.html.erb
@@ -26,6 +27,7 @@ class CommentAsController < ApplicationController
   # GET /comment_as/new.json
   def new
     @comment_a = CommentA.new
+    authorize! :create, @comment_a
 
     respond_to do |format|
       format.html # new.html.erb
@@ -36,6 +38,7 @@ class CommentAsController < ApplicationController
   # GET /comment_as/1/edit
   def edit
     @comment_a = CommentA.find(params[:id])
+    authorize! :update, @comment_a
   end
 
   # POST /comment_as
@@ -58,7 +61,7 @@ class CommentAsController < ApplicationController
   # PUT /comment_as/1.json
   def update
     @comment_a = CommentA.find(params[:id])
-
+    
     respond_to do |format|
       if @comment_a.update_attributes(params[:comment_a])
         format.html { redirect_to @comment_a, notice: 'Comment a was successfully updated.' }
@@ -74,6 +77,7 @@ class CommentAsController < ApplicationController
   # DELETE /comment_as/1.json
   def destroy
     @comment_a = CommentA.find(params[:id])
+    authorize! :destroy, @comment_a
     @comment_a.destroy
 
     respond_to do |format|

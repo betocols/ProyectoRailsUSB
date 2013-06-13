@@ -15,6 +15,7 @@ before_filter :authenticate_user!, :only => [:new, :create, :destroy]
   # GET /questions/1.json
   def show
     @question = Question.find(params[:id])
+    authorize! :read, @question
 
     respond_to do |format|
       format.html # show.html.erb
@@ -26,6 +27,7 @@ before_filter :authenticate_user!, :only => [:new, :create, :destroy]
   # GET /questions/new.json
   def new
     @question = Question.new
+    authorize! :create, @question
 
     respond_to do |format|
       format.html # new.html.erb
@@ -36,6 +38,7 @@ before_filter :authenticate_user!, :only => [:new, :create, :destroy]
   # GET /questions/1/edit
   def edit
     @question = Question.find(params[:id])
+    authorize! :update, @question
   end
 
   # POST /questions
@@ -76,6 +79,7 @@ before_filter :authenticate_user!, :only => [:new, :create, :destroy]
   # DELETE /questions/1.json
   def destroy
     @question = Question.find(params[:id])
+    authorize! :destroy, @question
     @question.destroy
 
     respond_to do |format|

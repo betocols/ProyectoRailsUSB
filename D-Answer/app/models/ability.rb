@@ -4,11 +4,11 @@ class Ability
   def initialize(user)
     user ||= User.new
     if user.role == "admin"
-        can [:read, :update, :destroy], [User, Tutorial]
-        can [:read, :destroy], Question
+        can [:read, :update, :destroy, :create], User#, Tutorial]
+        can [:read, :destroy], [Question, CommentA, CommentQ]
     else user.role == "user"
-        can [:create, :read], [Question, Answer, Comment]
-        can :update, Answer
+        can [:create, :read], [Question, Answer, CommentA, CommentQ]
+        can :update, [Answer, CommentA, CommentQ]
     end
     #
     # The third argument is an optional hash of conditions to further filter the
