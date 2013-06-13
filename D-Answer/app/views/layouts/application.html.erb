@@ -1,70 +1,67 @@
 <!DOCTYPE html>
-<style>
-  .boton {
-    border:1px solid black;
-    text-align:center;
-    background-color: #2066ce;
-    padding:3px;
-    font-weight: bold !important;
-    color:white  !important;
-  }
-
-  .fl {
-    float:left;
-  }
-
-  #wrapper {
-    width: 1000px;
-    margin:auto;
-    margin-top:0;
-    height:100%;
-    border-left:1px solid gray;
-    border-right: 1px solid gray;
-    background-color : white;
-    padding:20px;
-  }
-
-  html {
-    background-color : #133a6b;
-    height:100%;
-  }
-
-  body {
-    height:100%;
-    margin-top:0;
-  }
-</style>
 <html>
   <head>
-    <title>Bienvenidos a D-Answer</title>
+    <script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
+    <script type="text/javascript"> 
+      $(document).ready( function() {
+        $('#deletesuccess').delay(2000).fadeOut();
+      });
+    </script>
+
+    <title>D-Answer</title>
     <%= stylesheet_link_tag    "application", :media => "all" %>
     <%= javascript_include_tag "application" %>
     <%= csrf_meta_tags %>
   </head>
-  <body>
-  <div id="wrapper">
-    <div style="margin:auto;height:20px">
+  <header>
+    <div id="head_title">
+      <div style="font-size:xx-large;font-style:italic;font-weight:bold;float:left;margin-left:140px">
+        D-Answer
+      </div>
       <% if user_signed_in? %> 
 
-        <div style="float:left;margin-right:10px">
-          Bienvenido, <%= current_user.login %>
+        <div style="float:right;width:350px">
+          <div style="padding-top:10px;float:left">
+            Bienvenido, <%= current_user.login %>
+          </div>
+          <div style="margin-left:10px;margin-right:120px;margin-top:10px;float:right">
+            <%= link_to "Perfil", current_user, :class => 'boton' %>
+            <%= link_to 'Salir', destroy_user_session_path, :method => :delete, :class => 'boton'%>
+          </div>
         </div>
-      
-        <div style="float:right">
-          <%= link_to 'Log out', destroy_user_session_path, :method => :delete, :class => 'boton fl' %>
-        </div>
+
       <% else %>
-        <%= link_to "Sign in", new_session_path(:user) %><br />
-        <div> No estas registrado? Registrate y comienza a preguntar!
-        <%= link_to "Sign up", new_registration_path(:user) %><br />
-
-      </div>
+        <div style="padding-top:10px;float:right;width:575px">
+          <div style="float:left">
+            <%= link_to "Sign in", new_session_path(:user), :class => 'boton' %><br />
+          </div>
+          <div style="margin-right:120px;float:right"> No estas registrado? Regístrate y comienza a preguntar!
+            <%= link_to "Sign up", new_registration_path(:user), :class => 'boton' %><br />
+          </div>
+        </div>  
       <% end %>
-    </div>    
-    <p class="notice"><%= notice %></p>
-    <p class="alert"><%= alert %></p>
-
-    <%= yield %>
-  <div>
+    </div>
+    <ul id="head_menu">
+      <% if not user_signed_in? %>
+        <%= link_to content_tag(:li, 'Preguntas', :class => "nav", :id => "last"), questions_path %>
+      <% else %>
+        <%= link_to content_tag(:li, 'Preguntas', :class => "nav"), questions_path %>
+        <% if current_user.role == "admin" %>
+          <%= link_to content_tag(:li, 'Mis Preguntas', :class => "nav"), questions_path %>
+          <%= link_to content_tag(:li, 'Listar Usuarios', :class => "nav", :id => "last"), users_path %>
+        <% else %>
+          <%= link_to content_tag(:li, 'Mis Preguntas', :class => "nav", :id => "last"), questions_path %>
+        <% end %> 
+    <% end %>
+    </ul>
+  </header>
+  <body>
+    <div id="wrapper">  
+      <div id="deletesuccess" style="text-align:center;color:white;">
+        <p class="notice" style="background:rgba(68,217,74,0.6);"><%= notice %></p>
+        <p class="alert" style="background:rgba(233,126,23,0.4);"><%= alert %></p>
+      </div>
+      <%= yield %>
+    </div>
   </body>
 </html>

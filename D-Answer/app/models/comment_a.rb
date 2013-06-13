@@ -5,7 +5,7 @@ class CommentA < ActiveRecord::Base
   
   attr_accessible :commented_on, :content
 
-  VALID_STRING_REGEX = /\A[\w+\-\ .]*\z/
-  
+  VALID_STRING_REGEX = /\A[\w+\-\\!\?\,\.\"\' .]*\z/
+
   validates :content, presence: true, uniqueness: true, format: { with: VALID_STRING_REGEX }
 end

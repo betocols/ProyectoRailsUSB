@@ -1,36 +1,50 @@
-<h2>Sign up</h2>
-
-<%= form_for(resource, :as => resource_name, :url => registration_path(resource_name)) do |f| %>
-  <%= devise_error_messages! %>
-
-  <div><%= f.label :username %><br />
-  <%= f.text_field :login, :autofocus => true %></div>
-
-  <div><%= f.label :nombre %><br />
-  <%= f.text_field :name %></div>
-  
-  <div><%= f.label :apellido %><br />
-  <%= f.text_field :lastname %></div>
-
-  <div><%= f.label :email %><br />
-  <%= f.email_field :email %></div>
-
-  <div><%= f.label :password %><br />
-  <%= f.password_field :password %></div>
-
-  <div><%= f.label :password_confirmation %><br />
-  <%= f.password_field :password_confirmation %></div>
-
-  <div><%= f.label :rol %><br />
-  <%= f.collection_select :role, User::ROLES, :to_s, :humanize %></div>
-  
-
-<!--   <div>
-    <input type="checkbox" name="rol" value="admin">Admin<br>
-    
+<div class="sign" style="width:450px;margin-left:280px">
+  <div class="title" style="margin-left:0">
+    Sign up
   </div>
- -->
-  <div><%= f.submit "Sign up" %></div>
-<% end %>
 
-<%= render "devise/shared/links" %>
+  <div style="margin-top:20px;margin-left:20px;">
+    <%= form_for(resource, :as => resource_name, :url => registration_path(resource_name)) do |f| %>
+      <%= devise_error_messages! %>
+  <table>
+    <tr>
+      <td>
+        <div><%= f.label :username %><br />
+        <%= f.text_field :login, :autofocus => true %></div>
+      </td>
+      <td>
+        <div><%= f.label :email %><br />
+        <%= f.email_field :email %></div>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <div><%= f.label :nombre %><br />
+        <%= f.text_field :name %></div>
+      </td>
+      <td>
+        <div><%= f.label :apellido %><br />
+        <%= f.text_field :lastname %></div>
+      </td>
+      </tr>
+    <tr>
+      <td>
+        <div><%= f.label :contraseña %><br />
+        <%= f.password_field :password %></div>
+      </td>
+      <td>
+        <div><%= f.label :confirmación_contraseña %><br />
+        <%= f.password_field :password_confirmation %></div>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="2" style="text-align:center">
+        <div><%= f.label :rol %><br />
+        <%= f.collection_select :role, User::ROLES, :to_s, :humanize %></div>
+      </td>
+    </tr>
+  </table>
+  <div style="text-align:right"><%= f.submit "Sign up" %></div>
+    <% end %>
+  </div>
+</div>

@@ -1,6 +1,10 @@
-<h1>Nueva Pregunta</h1>
-<div style="margin-top:10px">
-  <%= link_to 'Volver', questions_path, :class => 'boton' %>
+<div>
+  <div class="title" style="float:left">
+    Nueva Pregunta
+  </div>
+  <div style="margin-left:10px;margin-top:15px;float:left">
+    <%= link_to 'Volver', :back, :class => 'boton' %>
+  </div>
 </div>
 
 <%= render 'form' %>

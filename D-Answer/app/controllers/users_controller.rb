@@ -43,7 +43,8 @@ class UsersController < ApplicationController
   # POST /users.json
   def create
     @user = User.new(params[:user])
-
+    @user.score = 0
+    
     respond_to do |format|
       if @user.save
         UserMailer.welcome_email(@user).deliver

@@ -15,8 +15,6 @@ before_filter :authenticate_user!, :only => [:new, :create, :destroy]
   # GET /questions/1.json
   def show
     @question = Question.find(params[:id])
-    
-    
 
     respond_to do |format|
       format.html # show.html.erb
@@ -45,6 +43,7 @@ before_filter :authenticate_user!, :only => [:new, :create, :destroy]
   def create
     @question = Question.new(params[:question])
     @question.user = current_user
+    @question.score = 0
     
     respond_to do |format|
       if @question.save

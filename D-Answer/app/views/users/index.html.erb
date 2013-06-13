@@ -1,23 +1,29 @@
-<h1>Listing users</h1>
+<div class="title">Lista de Usuarios</div> 
+<%= link_to 'Volver', questions_path, :class => 'boton' %>
+<div style="float:right;margin-top:15px;margin-right:60px"><%= link_to 'Nuevo Usuario', new_user_path, :class => 'boton' %></div>
 
-<table>
+
+<table class="list_users">
   <tr>
-    <th></th>
+    <th>Login</th>
+    <th>Nombre</th>
+    <th>Apellido</th>
+    <th>Email</th>
+    <th>Score</th>
     <th></th>
     <th></th>
   </tr>
 
 <% @users.each do |user| %>
   <tr>
-    <td><%= user.email %></td>
     <td><%= user.login %></td>
-    <td><%= link_to 'Show', user %></td>
-    <td><%= link_to 'Edit', edit_user_path(user) %></td>
-    <td><%= link_to 'Destroy', user, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+    <td><%= user.name %></td>
+    <td><%= user.lastname %></td>
+    <td><%= user.email %></td>    
+    <td><%= user.score %></td>
+    <td><%= link_to '✎', edit_user_path(user) %></td>
+    <td><%= link_to 'X', user, method: :delete, data: { confirm: 'Are you sure?' }, :style => 'color:red' %></td>
   </tr>
 <% end %>
 </table>
 
-<br />
-
-<%= link_to 'New User', new_user_path %>

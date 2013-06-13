@@ -1,74 +1,77 @@
-<style>
-  table {
-    margin:20px; 
-    border-collapse:collapse;
-  }
+<div>
+  <div style="border-bottom:1px solid #2a638f">
+    <div class="title" style="border-bottom:none"> <%= @question.title %> </div>
+    <div style="float:right;margin-top:10px;margin-right:30px;">
+      <%= link_to 'Editar', edit_question_path(@question), :class => 'boton' %>
+      <%= link_to 'Volver', questions_path, :class => 'boton' %>
+    </div>
+  </div>
+  <div sytle="text-align:center;margin-top:3px;font-size:x-small;">
+    <%= @question.created_at.day %>/<%= @question.created_at.month %>/<%= @question.created_at.year %>
+    &nbsp  &nbsp
+    <%= @question.created_at.strftime("%I:%M%p") %>
+  </div>
+  <table id="table_question">
+    <tr>
+      <td>
+        <b> Categoría: </b>
+      </td>
+      <td>  
+        <%= @question.category %>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">
+        <b> Pregunta: </b>
+      </td>
+      <td style="text-align:justify;">  
+        <%= @question.content %>
+      </td>
+    </tr>
+  </table>
 
-  td, th {
-    padding:10px;
-  }
-
-  th { 
-    padding:5px;
-    background-color:#2066ce;
-    color:white;
-  }
-
-  .boton {
-    border:1px solid black;
-    text-align:center;
-    background-color: #2066ce;
-    padding:3px;
-    color:white !important;
-  }
-
-  .fl {
-    float:left;
-  }
-
-</style>
-
-
-<h2>Pregunta: <%= @question.title %></h2>
-<%= @question.created_at %><p>
-<%= link_to 'Editar', edit_question_path(@question), :class => 'boton' %>
-<%= link_to 'Volver', questions_path, :class => 'boton' %>
-<table>
-  <tr>
-    <td>
-      <b> Categoría: </b>
-    </td>
-    <td>  
-      <%= @question.category %>
-    </td>
-  </tr>
-  <tr>
-    <td style="vertical-align: top;">
-      <b> Pregunta: </b>
-    </td>
-    <td style="text-align:justify;">  
-      <%= @question.content %>
-    </td>
-  </tr>
-</table>
-
-<div style="border">
-  <div style="font-size:small;margin-left:120px">
-    <h2>Comentarios </h2>
-    <% @question.comment_qs.each do |c| %>
-      <% if c.content %>
-        <li>
-          <p>
-            <%= c.content %>
-            <%= link_to 'Destroy', [@question, c], method: :delete, :class => 'boton', data: { confirm: 'Are you sure?'}%>
-          </p>
-        </li>
+  <div style="border">
+    <div style="font-size:small;margin-left:120px">
+      <h2>Comentarios </h2>
+      <% @question.comment_qs.each do |c| %>
+        <% if c.content %>
+          <li>
+            <p>
+              <%= c.content %>
+              <%= link_to 'Destroy', [@question, c], method: :delete, :class => 'boton', data: { confirm: 'Are you sure?'}%>
+            </p>
+          </li>
+        <% end %>
       <% end %>
+
+      <%= form_for [@question, @question.comment_qs.build] do |f| %>
+        <div class="field">
+          <%= f.text_area :content, :cols => 70, :rows => 5, :placeholder => "Agrega un comentario." %>
+        </div>
+        <div class="actions">
+          <%= f.submit %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+
+
+  <h2>Respuestas </h2>
+  <div>
+    <% @question.answers.each do |c| %>
+      <% if c.content %>
+        <p><li><p>
+          <%= c.content %>
+          <%= link_to 'Destroy', [@question, c], method: :delete, :class => 'boton', data: { confirm: 'Are you sure?'}%>
+        </p>
+      <% end %>
+    </li>
     <% end %>
 
-    <%= form_for [@question, @question.comment_qs.build] do |f| %>
+    <%= form_for [@question, @question.answers.build] do |f| %>
       <div class="field">
-        <%= f.text_area :content, :cols => 70, :rows => 5, :placeholder => "Agrega un comentario." %>
+        <%= f.text_area :content, :cols => 70, :rows => 5, :placeholder => "Responde la pregunta." %>
+
       </div>
       <div class="actions">
         <%= f.submit %>
@@ -76,26 +79,3 @@
     <% end %>
   </div>
 </div>
-
-
-<h2>Respuestas </h2>
-<% @question.answers.each do |c| %>
-  <% if c.content %>
-    <p><li><p>
-      <%= c.content %>
-      <%= link_to 'Destroy', [@question, c], method: :delete, :class => 'boton', data: { confirm: 'Are you sure?'}%>
-    </p>
-  <% end %>
-</li>
-<% end %>
-
-<%= form_for [@question, @question.answers.build] do |f| %>
-  <div class="field">
-    <%= f.label :content %><br />
-    <%= f.text_area :content, :cols => 70, :rows => 5, :placeholder => "Responde la pregunta." %>
-
-  </div>
-  <div class="actions">
-    <%= f.submit %>
-  </div>
-<% end %>

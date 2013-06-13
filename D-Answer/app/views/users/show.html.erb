@@ -1,5 +1,41 @@
-<p id="notice"><%= notice %></p>
+<div>
+  <div style="margin-left:120px;height:40px ;">
+    <div style="display:inline-block;border-bottom:1px solid #3b88c0;float:left">
+      <b>Usuario:</b> 
+      <div class="title" style="margin-left:10px;border-bottom:none">
+        <%= @user.login %>
+      </div>
+    </div>
+    <div style="margin-left:10px;margin-top:15px;float:left">
+      <%= link_to 'Editar', edit_user_path(@user), :class => 'boton'%>
+      <%= link_to 'Volver', users_path, :class => 'boton'%>
+    </div>
+  </div>
 
 
-<%= link_to 'Edit', edit_user_path(@user) %> |
-<%= link_to 'Back', users_path %>
+  <table id="show_user">
+    <tr>
+      <td>
+        <b> Nombre: </b>  
+        <%= @user.name %>
+      </td>
+      <td>
+        <b> Apellido: </b>
+        <%= @user.lastname %>
+      </td>
+    </tr>
+    <tr>
+      <td >
+        <b> Email: </b>  
+        <%= @user.email %>
+      </td>
+      <td>
+        <b> Puntaje: </b>
+        <%= @user.rating %>
+      </td>
+    </tr>
+
+    </tr>
+  </table>
+
+

@@ -1,6 +1,13 @@
-<h1>Editing user</h1>
+<div style="width:800px;height:40px"> 
+  <div class="title" style="float:left">
+    Editar Usario
+  </div>
+
+  <div style="margin-left:10px;margin-top:15px;float:left">
+    <%= link_to 'Volver', :back, :class => 'boton' %>
+  </div>
+</div>
 
 <%= render 'form' %>
 
-<%= link_to 'Show', @user %> |
-<%= link_to 'Back', users_path %>
+
