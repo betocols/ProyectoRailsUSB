@@ -31,10 +31,10 @@
   <% end %>
 
   <%= form_tag questions_path, :method => 'get', :id => "questions_search" do %>
-    <p>
-      <%= text_field_tag :search, params[:search] %>
-      <%= submit_tag "Search", :name => nil %>
-    </p>
+    <div style="float:right;margin-right:50px;margin-top:10px;margin-bottom: 20px;">    
+      <%= text_field_tag :search, params[:search], :placeholder => "Buscar", :size => 30 %>
+      <%= submit_tag "Buscar", :name => nil %>
+    </div>
 
     <table class="list_questions">
 

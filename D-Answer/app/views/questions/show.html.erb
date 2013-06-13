@@ -2,19 +2,36 @@
   <div style="border-bottom:1px solid #2a638f">
     <div class="title" style="border-bottom:none"> <%= @question.title %> </div>
     <div style="float:right;margin-top:10px;margin-right:30px;">
-      <%= link_to 'Editar', edit_question_path(@question), :class => 'boton' %>
+      <% if current_user == @question.user_id %>
+        <%= link_to 'Editar', edit_question_path(@question), :class => 'boton' %>
+      <% end %>
       <%= link_to 'Volver', questions_path, :class => 'boton' %>
     </div>
   </div>
-  <div sytle="text-align:center;margin-top:3px;font-size:x-small;">
-    <%= @question.created_at.day %>/<%= @question.created_at.month %>/<%= @question.created_at.year %>
-    &nbsp  &nbsp
-    <%= @question.created_at.strftime("%I:%M%p") %>
+  
+  <div class="question_info">
+      <div>
+        <b>Fecha creación:</b>
+        <%= @question.created_at.day %>/<%= @question.created_at.month %>/<%= @question.created_at.year %>
+        <%= @question.created_at.strftime("%I:%M%p") %>
+      </div>
+      <div>
+        <b>Autor:</b> <%= User.find(@question.user_id).login %>
+      </div>
   </div>
+  
   <table id="table_question">
     <tr>
       <td>
-        <b> Categoría: </b>
+        <b>Score:</b> 
+      </td>
+      <td>
+        <%= @question.score %>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <b> Tags: </b>
       </td>
       <td>  
         <%= @question.category %>
@@ -30,52 +47,87 @@
     </tr>
   </table>
 
-  <div style="border">
-    <div style="font-size:small;margin-left:120px">
-      <h2>Comentarios </h2>
+  <div>
+    <div style="font-size:small;margin-left:120px;border-top:5px double #999">
+      
+      <h3 style="margin-left: 20px;"> <%= @question.comment_qs.size %> Comentario(s) </h3>
+      
       <% @question.comment_qs.each do |c| %>
         <% if c.content %>
-          <li>
+          <li style="list-style:none;border-top:1px solid #999">
             <p>
-              <%= c.content %>
-              <%= link_to 'Destroy', [@question, c], method: :delete, :class => 'boton', data: { confirm: 'Are you sure?'}%>
+              <div style="font-style:italic">
+                <b>Autor:</b> <%= User.find(c.user_id).login %>
+                <b> | Fecha: </b>
+                <%= c.created_at.day %>/<%= c.created_at.month %>/<%= c.created_at.year %>
+                <%= c.created_at.strftime("%I:%M%p") %>
+                <spam style="float:right;font-style:normal">
+                </spam>
+              </div>
+              <div style="margin:20px 20px">
+                <%= c.content %>
+              </div>
             </p>
           </li>
         <% end %>
       <% end %>
 
-      <%= form_for [@question, @question.comment_qs.build] do |f| %>
+      <div style="padding-top:20px;border-top:4px dotted #999;margin-left:20px;margin-right: 353px;">
+        <spam style="margin-left:20px;font-style:italic"><b> Deja tu comentario </b></spam>
+        <%= form_for [@question, @question.comment_qs.build] do |f| %>
+          <div class="field">
+            <%= f.text_area :content, :cols => 70, :rows => 3, :placeholder => "Agrega un comentario." %>
+          </div>
+          <div class="actions">
+            <%= f.submit "Comentar"%>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+
+<div style="border-top: 10px double #2a638f;margin-top: 20px;">
+  <h2 style="color:#2a638f;margin-left:30px"> <%= @question.answers.size %> Respuesta(s) </h2>
+
+  <div>
+    <% @question.answers.each do |c| %>
+      <% if c.content %>
+        <li style="list-style:none;border-top:1px solid #2a638f">
+          <p>
+            <div style="font-style:italic">
+              <b>Autor:</b> <%= User.find(c.user_id).login %>
+              <b> | Fecha: </b>
+              <%= c.created_at.day %>/<%= c.created_at.month %>/<%= c.created_at.year %>
+              <%= c.created_at.strftime("%I:%M%p") %>
+
+              <spam style="float:right;font-style:normal">
+                <spam style="color:green">⬆</spam>
+                <spam style="color:red">⬇ </spam>
+                <b>Score: </b><%= @question.score %>
+              </spam>
+            </div>
+            <div style="margin:20px 20px">
+              <%= c.content %>
+            </div>
+          </p>
+        </li>
+      <% end %>    
+      <!--POR SI QUEREMOS ELIMINAR RESPUESTA Y/O COMENTARIO
+<%= link_to 'X', [@question, c], method: :delete, data: { confirm: 'Are you sure?'}, :style => ' color:red;'%> 
+--!>
+    <% end %>
+
+    <div style="padding-top:20px;border-top:4px dotted #2a638f;margin-left:20px;margin-right: 470px;">
+      <spam style="margin-left:20px;font-style:italic"><b> Deja tu respuesta </b></spam>
+      <%= form_for [@question, @question.answers.build] do |f| %>
         <div class="field">
-          <%= f.text_area :content, :cols => 70, :rows => 5, :placeholder => "Agrega un comentario." %>
+          <%= f.text_area :content, :cols => 70, :rows => 5, :placeholder => "Responde la pregunta." %>
         </div>
         <div class="actions">
-          <%= f.submit %>
+          <%= f.submit "Responder" %>
         </div>
       <% end %>
     </div>
   </div>
-
-
-  <h2>Respuestas </h2>
-  <div>
-    <% @question.answers.each do |c| %>
-      <% if c.content %>
-        <p><li><p>
-          <%= c.content %>
-          <%= link_to 'Destroy', [@question, c], method: :delete, :class => 'boton', data: { confirm: 'Are you sure?'}%>
-        </p>
-      <% end %>
-    </li>
-    <% end %>
-
-    <%= form_for [@question, @question.answers.build] do |f| %>
-      <div class="field">
-        <%= f.text_area :content, :cols => 70, :rows => 5, :placeholder => "Responde la pregunta." %>
-
-      </div>
-      <div class="actions">
-        <%= f.submit %>
-      </div>
-    <% end %>
-  </div>
 </div>
+

@@ -2,7 +2,6 @@
   margin:20px auto; 
   border-collapse:collapse;
   min-width:900px
-
 }
 
 .list_questions td, th {
@@ -66,4 +65,10 @@
   padding:5px;
   background-color:green;
   color:white;
+}
+
+.question_info {
+  text-align:center;
+  margin-top:3px;
+  font-size:small;
 }

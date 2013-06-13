@@ -40,8 +40,10 @@
         </spam>
         <%= f.input :content, :as => :text, :label => false, :input_html => { :rows => 20, :cols => 120 } %>
       </td>
-    </tr>  
-
+     <tr>
+      <td>        
+        <%= f.input :score, :as => :hidden, :value => "0" %></div>
+      </td>
     </tr>
   </table>
   
