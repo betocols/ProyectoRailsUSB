@@ -52,7 +52,7 @@ class CommentQsController < ApplicationController
     respond_to do |format|
       if @commentq.save
         UserMailer.commentqs_email(@user, @question).deliver
-        format.html { redirect_to @question, notice: 'Comment q was successfully created.' }
+        format.html { redirect_to @question, notice: 'Comentario creado correctamente.' }
         format.json { render json: @question, status: :created, location: @comment_q }
       else
         format.html { render action: "new" }
@@ -68,7 +68,7 @@ class CommentQsController < ApplicationController
 
     respond_to do |format|
       if @comment_q.update_attributes(params[:comment_q])
-        format.html { redirect_to @comment_q, notice: 'Comment q was successfully updated.' }
+        format.html { redirect_to @comment_q, notice: 'Comentario actualizado correctamente.' }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }

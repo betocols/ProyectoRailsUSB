@@ -4,7 +4,7 @@
     <script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
     <script type="text/javascript"> 
       $(document).ready( function() {
-        $('#deletesuccess').delay(2000).fadeOut();
+        $('#deletesuccess').delay(5000).fadeOut();
       });
     </script>
 
@@ -35,7 +35,7 @@
           <div style="float:left">
             <%= link_to "Sign in", new_session_path(:user), :class => 'boton' %><br />
           </div>
-          <div style="margin-right:120px;float:right"> No estas registrado? Regístrate y comienza a preguntar!
+          <div style="margin-right:120px;float:right"> No estás registrado? Regístrate y comienza a preguntar!
             <%= link_to "Sign up", new_registration_path(:user), :class => 'boton' %><br />
           </div>
         </div>  

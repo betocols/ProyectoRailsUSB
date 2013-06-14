@@ -1,6 +1,9 @@
 #encoding: UTF-8
 class UsersController < ApplicationController
   before_filter :authenticate_user!, :only => [:new, :create, :destroy, :show] 
+  before_filter :is_authorize, :only => [:show, :edit, :update, :destroy]
+  before_filter :is_admin, :only => [:index] #Solo admin puede listar usuarios
+
   # GET /users
   # GET /users.json
   def index
@@ -16,11 +19,13 @@ class UsersController < ApplicationController
   # GET /users/1.json
   def show
     @user = User.find(params[:id])
+    @question = Question.where( :user_id => params[:id] )
     authorize! :read, @user
 
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @user }
+      format.json { render json: @question }
     end
   end
 
@@ -40,6 +45,7 @@ class UsersController < ApplicationController
   def edit
     @user = User.find(params[:id])
     authorize! :update, @user
+
   end
 
   # POST /users
@@ -50,7 +56,7 @@ class UsersController < ApplicationController
     
     respond_to do |format|
       if @user.save
-        format.html { redirect_to @user, notice: 'User was successfully created.' }
+        format.html { redirect_to @user, notice: 'Usuario creado correctamente.' }
         format.json { render json: @user, status: :created, location: @user }
       else
         format.html { render action: "new" }
@@ -66,7 +72,7 @@ class UsersController < ApplicationController
 
     respond_to do |format|
       if @user.update_attributes(params[:user])
-        format.html { redirect_to @user, notice: 'User was successfully updated.' }
+        format.html { redirect_to @user, notice: 'Usuario actualizado.' }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }

@@ -1,5 +1,6 @@
 class QuestionsController < ApplicationController
 before_filter :authenticate_user!, :only => [:new, :create, :destroy]
+before_filter :is_owner, :only => [:edit]
   # GET /questions
   # GET /questions.json
   def index
@@ -10,10 +11,24 @@ before_filter :authenticate_user!, :only => [:new, :create, :destroy]
     end
 
     respond_to do |format|
-      format.html # index.html.erb
+      format.html # my_questions.html.erb
       format.json { render json: @questions }
     end
   end
+
+  # def my_questions
+  #   if params[:tag]
+  #     @questions = Question.tagged_with(params[:tag])
+  #   else
+  #     @questions = Question.search(params[:search])
+  #   end
+  #   @question = Question.where( :user_id => current_user.id )
+
+  #   respond_to do |format|
+  #     format.html # index.html.erb
+  #     format.json { render json: @questions }
+  #   end
+  # end
 
   # GET /questions/1
   # GET /questions/1.json
@@ -87,7 +102,7 @@ before_filter :authenticate_user!, :only => [:new, :create, :destroy]
     @question.destroy
 
     respond_to do |format|
-      format.html { redirect_to questions_url }
+      format.html { redirect_to :back }
       format.json { head :no_content }
     end
   end

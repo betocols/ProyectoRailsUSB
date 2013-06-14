@@ -1,0 +1,44 @@
+<div id="todas">
+  <div class="title">Preguntas</div>
+  <% if user_signed_in? %>
+    <%= link_to 'Nueva Pregunta', new_question_path, :class => 'boton', :style => "float:right;margin-top:15px;margin-right:50px"%>
+  <% end %>
+
+  <%= form_tag questions_path, :method => 'get', :id => "questions_search" do %>
+    <div style="float:right;margin-right:50px;margin-top:10px;margin-bottom: 20px;">    
+      <%= text_field_tag :search, params[:search], :placeholder => "Buscar", :size => 30 %>
+      <%= submit_tag "Buscar", :name => nil %>
+    </div>
+
+    <table class="list_questions">
+
+      <% if !@questions.blank? %>
+        <% @questions.sort {|a,b| b.created_at <=> a.created_at }.each do |question| %>
+        <tr>
+            <td id="titulo">
+              <%= link_to question.title, question, :title => question.title %>
+            </td>
+            
+            <td>
+              <%= question.created_at.day %>/<%= question.created_at.month %>/<%= question.created_at.year %>
+              &nbsp  &nbsp
+              <%= question.created_at.strftime("%I:%M%p") %>
+            </td>
+            
+            <% if current_user && current_user.role == "admin" %>  
+              <td id="last_row">
+                <%= link_to 'X', question, method: :delete, data: { confirm: 'Are you sure?' }, :style=> 'color:red' %>
+              </td>
+              <% end %>
+          </tr>
+        <% end %>
+      <% else %>
+        <tr>
+          <td>
+            No hay preguntas en la base de datos.
+          </td>
+        </tr>  
+        <% end %>
+    </table>
+  <% end %>
+</div>

@@ -48,7 +48,7 @@ class CommentAsController < ApplicationController
 
     respond_to do |format|
       if @comment_a.save
-        format.html { redirect_to @comment_a, notice: 'Comment a was successfully created.' }
+        format.html { redirect_to @comment_a, notice: 'Comentario creado correctamente.' }
         format.json { render json: @comment_a, status: :created, location: @comment_a }
       else
         format.html { render action: "new" }
@@ -64,7 +64,7 @@ class CommentAsController < ApplicationController
     
     respond_to do |format|
       if @comment_a.update_attributes(params[:comment_a])
-        format.html { redirect_to @comment_a, notice: 'Comment a was successfully updated.' }
+        format.html { redirect_to @comment_a, notice: 'Comentario actualizado correctamente.' }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }
