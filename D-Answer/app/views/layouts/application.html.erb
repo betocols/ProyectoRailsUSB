@@ -44,14 +44,17 @@
     <ul id="head_menu">
       <% if not user_signed_in? %>
         <%= link_to content_tag(:li, 'Preguntas', :class => "nav", :id => "last"), questions_path %>
+	<%= link_to content_tag(:li, 'Categorías', :class => "nav", :id => "last"), tags_path %>
       <% else %>
         <%= link_to content_tag(:li, 'Preguntas', :class => "nav"), questions_path %>
         <% if current_user.role == "admin" %>
           <%= link_to content_tag(:li, 'Mis Preguntas', :class => "nav"), questions_path %>
           <%= link_to content_tag(:li, 'Listar Usuarios', :class => "nav", :id => "last"), users_path %>
+	  <%= link_to content_tag(:li, 'Categorías', :class => "nav", :id => "last"), tags_path %>
         <% else %>
           <%= link_to content_tag(:li, 'Mis Preguntas', :class => "nav", :id => "last"), questions_path %>
-        <% end %> 
+	  <%= link_to content_tag(:li, 'Categorías', :class => "nav", :id => "last"), tags_path %>
+        <% end %>
     <% end %>
     </ul>
   </header>

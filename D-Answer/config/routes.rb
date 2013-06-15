@@ -1,8 +1,10 @@
 require 'role_model'
-DAnswer::Application.routes.draw do
+DAnswer::Application.routes.draw do  
+  
   get "home/index"
   get 'tags/:tag', to: 'questions#index', as: :tag
-
+  get 'tags/', to: 'tags#index'
+  
   devise_for :users
 
   resources :users
