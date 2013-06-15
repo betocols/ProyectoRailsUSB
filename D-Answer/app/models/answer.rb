@@ -3,7 +3,7 @@ class Answer < ActiveRecord::Base
   
   belongs_to :question
   
-  has_many :commentas, :class_name => "CommentA", :inverse_of => :answer
+  has_many :comment_as, :class_name => "CommentA", :inverse_of => :answer
   
   attr_accessible :answered_on, :content, :score
 end

@@ -1,5 +1,5 @@
 class UserMailer < ActionMailer::Base
-  default from: "notification@d-answer.com"
+  default from: "danswerusb@gmail.com"
   
   def answer_email(user, question)
     @user = user

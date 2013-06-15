@@ -48,6 +48,7 @@ class AnswersController < ApplicationController
     @answer = @question.answers.new(params[:answer])
     @answer.user = current_user
     @answer.score = 0
+    @user = User.find(@question.user_id)
     
     respond_to do |format|
       if @answer.save
