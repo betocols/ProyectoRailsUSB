@@ -27,6 +27,10 @@
       </td>
       <td>
         <%= @question.score %>
+        <!-- NO ESTA BIEN -->
+          <%= link_to '⬆', {:controller => "questions", :action => "up", :id => @question.id }, :style => 'color:green' %>          
+          <%= link_to '⬇', questions_down_path(@question), :style => 'color:red' %>
+        
       </td>
     </tr>
     <tr>
@@ -94,7 +98,7 @@
       <% if c.content %>
         <p><li><p>
           <%= c.content %>
-          <!--<%= link_to 'Destroy', [@question, c], method: :delete, :class => 'boton', data: { confirm: 'Are you sure?'}%> -->
+          <!-- <%= link_to 'Destroy', [@question, c], method: :delete, :class => 'boton', data: { confirm: 'Are you sure?'}%> -->
             <%= link_to 'Comentar', new_question_answer_comment_as_path(@question, c), :class => 'boton' %>
         </p>
         </li>

@@ -3,6 +3,7 @@ es:
     failure:
       user:
         not_found_in_database: 'Usuario no existente.'
+        unauthenticated: 'Debes estar loggeado para poder acceder a esta sección.'
     sessions:
       signed_in: 'Bienvenido a D-Answer.'
       signed_out: 'Hasta luego.'

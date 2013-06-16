@@ -1,11 +1,11 @@
-<h1>Categorías</h1>
+<div class="title">Tags</div>
 
-<table>
-
-<% @tags.each do |tag| %>
-  <tr>
-    <td><%= link_to tag.name, tag_path(tag.name) %></td>
-  </tr>
-<% end %>
+<table style="margin-top: 20px;width:1000px;text-align:center">
+  <% @tags.in_groups_of(10, false) do |row| %>
+    <tr style="width:100px">
+      <% for tag in row %>
+        <td><%= link_to tag.name, tag_path(tag.name) %></td>
+      <% end %>
+    </tr>
+  <% end %>
 </table>
-

@@ -15,20 +15,30 @@ before_filter :is_owner, :only => [:edit]
       format.json { render json: @questions }
     end
   end
+# NO ESTA BIEN
+  def up
+    @question = Question.find(params[:id])
+    @question.score += 1
 
-  # def my_questions
-  #   if params[:tag]
-  #     @questions = Question.tagged_with(params[:tag])
-  #   else
-  #     @questions = Question.search(params[:search])
-  #   end
-  #   @question = Question.where( :user_id => current_user.id )
+    respond_to do |format|
+      if @question.save
+        format.html # show.html.erb
+        format.json { render json: @question }
+      end
+    end
+  end
+# NO ESTA BIEN
+  def down
+    @question = Question.find(params[:id])
+    @question.score -= 1
 
-  #   respond_to do |format|
-  #     format.html # index.html.erb
-  #     format.json { render json: @questions }
-  #   end
-  # end
+    respond_to do |format|
+      if @question.save
+        format.html # show.html.erb
+        format.json { render json: @question }
+      end
+    end
+  end
 
   # GET /questions/1
   # GET /questions/1.json

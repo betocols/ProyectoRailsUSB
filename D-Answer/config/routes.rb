@@ -1,6 +1,17 @@
 require 'role_model'
 DAnswer::Application.routes.draw do  
   
+  get "my_questions/index"
+
+  get "questions/up"
+
+  get "questions/down"
+
+  # get "questions/up", to: 'questions#up'
+
+  # get "questions/:id/down", to: 'questions#up'
+
+
   get "home/index"
   get 'tags/:tag', to: 'questions#index', as: :tag
   get 'tags/', to: 'tags#index'

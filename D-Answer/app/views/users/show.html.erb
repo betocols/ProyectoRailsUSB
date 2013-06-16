@@ -41,11 +41,6 @@
     <div class="title">Mis Preguntas</div>
     <%= link_to 'Nueva Pregunta', new_question_path, :class => 'boton', :style => "float:right;margin-top:15px;margin-right:50px"%>
 
-    <%= form_tag questions_path, :method => 'get', :id => "questions_search" do %>
-      <div style="float:right;margin-right:50px;margin-top:10px;margin-bottom: 20px;">    
-        <%= text_field_tag :search, params[:search], :placeholder => "Buscar", :size => 30 %>
-        <%= submit_tag "Buscar", :name => nil %>
-      </div>
 
       <table class="list_questions">
 
@@ -77,6 +72,5 @@
 
 
       </table>
-    <% end %>
   </div>
 <% end %>
