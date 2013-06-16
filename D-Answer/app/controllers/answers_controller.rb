@@ -11,6 +11,38 @@ class AnswersController < ApplicationController
     end
   end
 
+  def up
+    @question = Question.find(params[:id])
+    @answer = @question.answers.find(params[:answer])
+    @answer.score += 1
+    @user = User.find(@question.user_id)
+    @user.score += 1
+    @user.save
+
+    respond_to do |format|
+      if @answer.save
+        format.html { redirect_to @question, notice: 'Voto actualizado.' }
+        format.json { render json: @question }
+      end
+    end
+  end
+
+  def down
+    @question = Question.find(params[:id])
+    @answer = @question.answers.find(params[:answer])
+    @answer.score -= 1
+    @user = User.find(@question.user_id)
+    @user.score -= 1
+    @user.save
+
+    respond_to do |format|
+      if @answer.save
+        format.html { redirect_to @question, notice: 'Voto actualizado.' }
+        format.json { render json: @question }
+      end
+    end
+  end
+
   # GET /answers/1
   # GET /answers/1.json
   def show

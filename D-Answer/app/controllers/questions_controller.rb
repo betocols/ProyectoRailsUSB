@@ -15,26 +15,32 @@ before_filter :is_owner, :only => [:edit]
       format.json { render json: @questions }
     end
   end
-# NO ESTA BIEN
+
   def up
     @question = Question.find(params[:id])
     @question.score += 1
+    @user = User.find(@question.user_id)
+    @user.score += 1
+    @user.save
 
     respond_to do |format|
       if @question.save
-        format.html # show.html.erb
+        format.html { redirect_to @question, notice: 'Voto actualizado.' }
         format.json { render json: @question }
       end
     end
   end
-# NO ESTA BIEN
+
   def down
     @question = Question.find(params[:id])
     @question.score -= 1
+    @user = User.find(@question.user_id)
+    @user.score -= 1
+    @user.save
 
     respond_to do |format|
       if @question.save
-        format.html # show.html.erb
+        format.html { redirect_to @question, notice: 'Voto actualizado.' }
         format.json { render json: @question }
       end
     end

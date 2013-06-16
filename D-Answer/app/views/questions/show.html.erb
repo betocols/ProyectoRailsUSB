@@ -27,9 +27,8 @@
       </td>
       <td>
         <%= @question.score %>
-        <!-- NO ESTA BIEN -->
-          <%= link_to '⬆', {:controller => "questions", :action => "up", :id => @question.id }, :style => 'color:green' %>          
-          <%= link_to '⬇', questions_down_path(@question), :style => 'color:red' %>
+          <%= link_to '⬆', questions_up_path(:id => @question), :style => 'color:green' %>          
+          <%= link_to '⬇', questions_down_path(:id => @question), :style => 'color:red' %>
         
       </td>
     </tr>
@@ -96,12 +95,6 @@
   <div>
     <% @question.answers.each do |c| %>
       <% if c.content %>
-        <p><li><p>
-          <%= c.content %>
-          <!-- <%= link_to 'Destroy', [@question, c], method: :delete, :class => 'boton', data: { confirm: 'Are you sure?'}%> -->
-            <%= link_to 'Comentar', new_question_answer_comment_as_path(@question, c), :class => 'boton' %>
-        </p>
-        </li>
         <li style="list-style:none;border-top:1px solid #2a638f">
           <p>
             <div style="font-style:italic">
@@ -111,9 +104,10 @@
               <%= c.created_at.strftime("%I:%M%p") %>
 
               <spam style="float:right;font-style:normal">
-                <spam style="color:green">⬆</spam>
-                <spam style="color:red">⬇ </spam>
-                <b>Score: </b><%= @question.score %>
+                <b>Score: </b><%= c.score %>
+                <%= link_to '⬆', answers_up_path(:id => @question, :answer => c), :style => 'color:green' %>          
+                <%= link_to '⬇', answers_down_path(:id => @question, :answer => c), :style => 'color:red' %>
+                <%= link_to 'Comentar', new_question_answer_comment_as_path(@question, c), :class => 'boton' %>
               </spam>
             </div>
             <div style="margin:20px 20px">

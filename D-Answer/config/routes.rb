@@ -7,10 +7,9 @@ DAnswer::Application.routes.draw do
 
   get "questions/down"
 
-  # get "questions/up", to: 'questions#up'
+  get "answers/up"
 
-  # get "questions/:id/down", to: 'questions#up'
-
+  get "answers/down"
 
   get "home/index"
   get 'tags/:tag', to: 'questions#index', as: :tag
