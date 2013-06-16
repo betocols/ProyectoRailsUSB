@@ -7,5 +7,5 @@ class CommentA < ActiveRecord::Base
 
   VALID_STRING_REGEX = /\A[\w+\-\\!\?\,\.\"\' .]*\z/
 
-  validates :content, presence: true, uniqueness: true, format: { with: VALID_STRING_REGEX }
+#  validates :content, presence: true, uniqueness: true, format: { with: VALID_STRING_REGEX }
 end

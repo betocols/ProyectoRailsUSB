@@ -1,17 +1,4 @@
 <%= semantic_form_for @question do |f| %>
-  
-  <% if @question.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@question.errors.count, "error") %> prohibited this question from being saved:</h2>
-
-      <ul>
-      <% @question.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
-
   <table class="create_question">
   <%= hidden_field_tag :direction, params[:direction] %>
   <%= hidden_field_tag :sort, params[:sort] %>
@@ -27,9 +14,9 @@
     <tr>
       <td>
         <spam style="margin-left:10px">
-          <b> CATEGORÍA </b>
+          <b> CATEGORÍAS (separadas por coma)</b>
         </spam>
-        <%= f.input :category, :label => false, :input_html => { :size => 60 } %>
+        <%= f.input :tag_list, :label => false, :input_html => { :size => 60 } %>
       <td>
     </tr>  
 
@@ -40,8 +27,10 @@
         </spam>
         <%= f.input :content, :as => :text, :label => false, :input_html => { :rows => 20, :cols => 120 } %>
       </td>
-    </tr>  
-
+     <tr>
+      <td>        
+        <%= f.input :score, :as => :hidden, :value => "0" %></div>
+      </td>
     </tr>
   </table>
   

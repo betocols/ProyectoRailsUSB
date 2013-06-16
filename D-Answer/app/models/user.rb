@@ -20,7 +20,7 @@ class User < ActiveRecord::Base
   
   # Setup accessible (or protected) attributes for your model
   attr_accessible :email, :password, :password_confirmation, :remember_me
-  attr_accessible :login, :name, :lastname, :bio, :rating, :role
+  attr_accessible :login, :name, :lastname, :bio, :rating, :role, :score
     
   # optionally set the integer attribute to store the roles in,
   # :roles_mask is the default
@@ -28,7 +28,7 @@ class User < ActiveRecord::Base
   
   #validates_numericality_of :rating
   VALID_STRING_REGEX = /\A[\w+\-\\!\?\,\.\"\' .]*\z/
-  validates :login, presence: true, uniqueness: true, format: { with: VALID_STRING_REGEX }, :length => { :in => 1..8 }
+  validates :login, presence: true, uniqueness: true, format: { with: VALID_STRING_REGEX }, :length => { :in => 1..15 }
   validates :name, format: { with: VALID_STRING_REGEX }
   validates :lastname, format: { with: VALID_STRING_REGEX }
   validates :password, format: { with: VALID_STRING_REGEX }

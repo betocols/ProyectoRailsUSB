@@ -33,10 +33,9 @@
         <%= f.text_field :lastname %></div>
       </td>
     </tr>
-    <tr>
-      <td>
-        <div><b><%= f.label :score %></b><br />
-        <%= f.text_field :score %></div>
+     <tr>
+      <td>        
+        <%= f.input :score, :as => :hidden, :value => "0" %></div>
       </td>
     </tr>
   </table>

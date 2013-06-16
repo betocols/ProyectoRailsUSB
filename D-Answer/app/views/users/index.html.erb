@@ -1,6 +1,6 @@
 <div class="title">Lista de Usuarios</div> 
 <%= link_to 'Volver', questions_path, :class => 'boton' %>
-<div style="float:right;margin-top:15px;margin-right:60px"><%= link_to 'Nuevo Usuario', new_user_path, :class => 'boton' %></div>
+<div style="float:right;margin-top:15px;margin-right:50px"><%= link_to 'Nuevo Admin', new_user_path, :class => 'boton' %></div>
 
 
 <table class="list_users">
@@ -9,6 +9,7 @@
     <th>Nombre</th>
     <th>Apellido</th>
     <th>Email</th>
+    <th>Permisos</th>
     <th>Score</th>
     <th></th>
     <th></th>
@@ -16,10 +17,11 @@
 
 <% @users.each do |user| %>
   <tr>
-    <td><%= user.login %></td>
+    <td><%= link_to user.login, user, :title => user.login  %></td>
     <td><%= user.name %></td>
     <td><%= user.lastname %></td>
     <td><%= user.email %></td>    
+    <td><%= user.role %></td>
     <td><%= user.score %></td>
     <td><%= link_to '✎', edit_user_path(user) %></td>
     <td><%= link_to 'X', user, method: :delete, data: { confirm: 'Are you sure?' }, :style => 'color:red' %></td>

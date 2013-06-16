@@ -4,7 +4,7 @@
     <script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
     <script type="text/javascript"> 
       $(document).ready( function() {
-        $('#deletesuccess').delay(2000).fadeOut();
+        $('#deletesuccess').delay(5000).fadeOut();
       });
     </script>
 
@@ -20,7 +20,7 @@
       </div>
       <% if user_signed_in? %> 
 
-        <div style="float:right;width:350px">
+        <div style="float:right;width:390px">
           <div style="padding-top:10px;float:left">
             Bienvenido, <%= current_user.login %>
           </div>
@@ -35,7 +35,7 @@
           <div style="float:left">
             <%= link_to "Sign in", new_session_path(:user), :class => 'boton' %><br />
           </div>
-          <div style="margin-right:120px;float:right"> No estas registrado? Regístrate y comienza a preguntar!
+          <div style="margin-right:120px;float:right"> No estás registrado? Regístrate y comienza a preguntar!
             <%= link_to "Sign up", new_registration_path(:user), :class => 'boton' %><br />
           </div>
         </div>  
@@ -44,14 +44,17 @@
     <ul id="head_menu">
       <% if not user_signed_in? %>
         <%= link_to content_tag(:li, 'Preguntas', :class => "nav", :id => "last"), questions_path %>
+	<%= link_to content_tag(:li, 'Categorías', :class => "nav", :id => "last"), tags_path %>
       <% else %>
         <%= link_to content_tag(:li, 'Preguntas', :class => "nav"), questions_path %>
         <% if current_user.role == "admin" %>
           <%= link_to content_tag(:li, 'Mis Preguntas', :class => "nav"), questions_path %>
           <%= link_to content_tag(:li, 'Listar Usuarios', :class => "nav", :id => "last"), users_path %>
+	  <%= link_to content_tag(:li, 'Categorías', :class => "nav", :id => "last"), tags_path %>
         <% else %>
           <%= link_to content_tag(:li, 'Mis Preguntas', :class => "nav", :id => "last"), questions_path %>
-        <% end %> 
+	  <%= link_to content_tag(:li, 'Categorías', :class => "nav", :id => "last"), tags_path %>
+        <% end %>
     <% end %>
     </ul>
   </header>

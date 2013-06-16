@@ -55,3 +55,6 @@ gem 'mail'
 
 #Para la paginacion y la busqueda
 gem 'will_paginate'
+
+#Para los tags
+gem 'acts-as-taggable-on'

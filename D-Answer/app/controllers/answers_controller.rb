@@ -49,11 +49,11 @@ class AnswersController < ApplicationController
     @answer.user = current_user
     @answer.score = 0
     @user = User.find(@question.user_id)
-    
+
     respond_to do |format|
       if @answer.save
-        UserMailer.answer_email(@user, @question).deliver
-        format.html { redirect_to @question, notice: 'Answer was successfully created.' }
+        UserMailer.answer_email(@user).deliver
+        format.html { redirect_to @question, notice: 'Respuesta creada correctamente.' }
         format.json { render json: @question, status: :created, location: @answer }
       else
         format.html { render action: "new" }
@@ -69,7 +69,7 @@ class AnswersController < ApplicationController
 
     respond_to do |format|
       if @answer.update_attributes(params[:answer])
-        format.html { redirect_to @answer, notice: 'Answer was successfully updated.' }
+        format.html { redirect_to @answer, notice: 'Respuesta actualizada correctamente.' }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }
