@@ -53,12 +53,12 @@ class AnswersController < ApplicationController
       # @user = User.find(@old[0].user_id)
       # @user.score -= 10
       # @user.save
-      @old[0].score -= 1
+      # @old[0].score -= 1
       @old[0].save
     end
 
     @answer.fav = 1
-    @answer.score += 1
+    # @answer.score += 1
     # @user = User.find(@answer.user_id)
     # @user.score += 10
     # @user.save

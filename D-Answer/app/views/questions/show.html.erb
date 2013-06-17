@@ -105,7 +105,7 @@
 
               <spam style="float:right;font-style:normal">
                 <% if current_user == User.find(@question.user_id) %> 
-                  <%= link_to '⭐', answers_favorite_path(:id => @question, :answer => fav), :style => 'color:green' %>
+                  <%= link_to '★', answers_favorite_path(:id => @question, :answer => fav), :style => 'color:green' %>
                 <% end %>
                 <b>Score: </b><%= fav.score %>
                 <%= link_to '⬆', answers_up_path(:id => @question, :answer => fav), :style => 'color:green' %>          
@@ -124,35 +124,33 @@
 
   <h2 style="color:#2a638f;margin-left:30px"> <%= @question.answers.size %> Respuesta(s) </h2>
   <div>
-    <% @question.answers.each do |c| %>
-      <% if c.content %>
-        <li style="list-style:none;border-top:1px solid #2a638f">
-          <p>
-            <div style="font-style:italic">
-              <b>Autor:</b> <%= User.find(c.user_id).login %>
-              <b> | Fecha: </b>
-              <%= c.created_at.day %>/<%= c.created_at.month %>/<%= c.created_at.year %>
-              <%= c.created_at.strftime("%I:%M%p") %>
+    <% @question.answers.sort {|a,b| b.score <=> a.score }.each do |c| %>
+      <% if c.fav != 1 %>
+        <% if c.content %>
+          <li style="list-style:none;border-top:1px solid #2a638f">
+            <p>
+              <div style="font-style:italic">
+                <b>Autor:</b> <%= User.find(c.user_id).login %>
+                <b> | Fecha: </b>
+                <%= c.created_at.day %>/<%= c.created_at.month %>/<%= c.created_at.year %>
+                <%= c.created_at.strftime("%I:%M%p") %>
 
-              <spam style="float:right;font-style:normal">
-                <% if current_user == User.find(@question.user_id) %> 
-                  <% if c.fav == 0 %>
-                    <%= link_to '⭐', answers_favorite_path(:id => @question, :answer => c), :style => 'color:green' %>
-                  <% else %>
-                    <%= link_to '★', answers_favorite_path(:id => @question, :answer => c), :style => 'color:green' %>
+                <spam style="float:right;font-style:normal">
+                  <% if current_user == User.find(@question.user_id) %> 
+                      <%= link_to '⭐', answers_favorite_path(:id => @question, :answer => c), :style => 'color:green' %>
                   <% end %>
-                <% end %>
-                <b>Score: </b><%= c.score %>
-                <%= link_to '⬆', answers_up_path(:id => @question, :answer => c), :style => 'color:green' %>          
-                <%= link_to '⬇', answers_down_path(:id => @question, :answer => c), :style => 'color:red' %>
-                <%= link_to 'Comentar', new_question_answer_comment_as_path(@question, c), :class => 'boton' %>
-              </spam>
-            </div>
-            <div style="margin:20px 20px">
-              <%= c.content %>
-            </div>
-          </p>
-        </li>
+                  <b>Score: </b><%= c.score %>
+                  <%= link_to '⬆', answers_up_path(:id => @question, :answer => c), :style => 'color:green' %>          
+                  <%= link_to '⬇', answers_down_path(:id => @question, :answer => c), :style => 'color:red' %>
+                  <%= link_to 'Comentar', new_question_answer_comment_as_path(@question, c), :class => 'boton' %>
+                </spam>
+              </div>
+              <div style="margin:20px 20px">
+                <%= c.content %>
+              </div>
+            </p>
+          </li>
+        <% end %>
       <% end %>
     <% end %>
 
