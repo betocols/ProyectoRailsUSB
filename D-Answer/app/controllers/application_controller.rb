@@ -16,7 +16,7 @@ class ApplicationController < ActionController::Base
       redirect_to(:back) if current_user.role == "user"
   end
 
-  helper_method :is_admin
+  helper_method :is_owner
   def is_owner
       redirect_to(:back) if current_user.id.to_s != params[:id]
   end

@@ -2,7 +2,7 @@
   <div style="border-bottom:1px solid #2a638f">
     <div class="title" style="border-bottom:none"> <%= @question.title %> </div>
     <div style="float:right;margin-top:10px;margin-right:30px;">
-      <% if current_user == @question.user_id %>
+      <% if current_user == User.find(@question.user_id) %>
         <%= link_to 'Editar', edit_question_path(@question), :class => 'boton' %>
       <% end %>
       <%= link_to 'Volver', questions_path, :class => 'boton' %>
@@ -90,8 +90,39 @@
   </div>
 
 <div style="border-top: 10px double #2a638f;margin-top: 20px;">
-  <h2 style="color:#2a638f;margin-left:30px"> <%= @question.answers.size %> Respuesta(s) </h2>
+  <% @question.answers.where( :fav => 1 ).each do |fav| %>
+      <% if fav.content %>
+        <li style="list-style:none">
+          <p>
+            <div style="font-style:italic">
+              <div style="text-align: center;background-color: green;color:white;margin-bottom: 5px;"> 
+                ★ Respuesta aceptada por el usuario ★ 
+              </div>
+              <b>Autor:</b> <%= User.find(fav.user_id).login %>
+              <b> | Fecha: </b>
+              <%= fav.created_at.day %>/<%= fav.created_at.month %>/<%= fav.created_at.year %>
+              <%= fav.created_at.strftime("%I:%M%p") %>
 
+              <spam style="float:right;font-style:normal">
+                <% if current_user == User.find(@question.user_id) %> 
+                  <%= link_to '⭐', answers_favorite_path(:id => @question, :answer => fav), :style => 'color:green' %>
+                <% end %>
+                <b>Score: </b><%= fav.score %>
+                <%= link_to '⬆', answers_up_path(:id => @question, :answer => fav), :style => 'color:green' %>          
+                <%= link_to '⬇', answers_down_path(:id => @question, :answer => fav), :style => 'color:red' %>
+                <%= link_to 'Comentar', new_question_answer_comment_as_path(@question, fav), :class => 'boton' %>
+              </spam>
+            </div>
+            <div style="margin:20px 20px">
+              <%= fav.content %>
+            </div>
+            <div style="text-align: center;background-color: green;height:10px"> </div>
+          </p>
+        </li>
+      <% end %>
+    <% end %>
+
+  <h2 style="color:#2a638f;margin-left:30px"> <%= @question.answers.size %> Respuesta(s) </h2>
   <div>
     <% @question.answers.each do |c| %>
       <% if c.content %>
@@ -104,6 +135,13 @@
               <%= c.created_at.strftime("%I:%M%p") %>
 
               <spam style="float:right;font-style:normal">
+                <% if current_user == User.find(@question.user_id) %> 
+                  <% if c.fav == 0 %>
+                    <%= link_to '⭐', answers_favorite_path(:id => @question, :answer => c), :style => 'color:green' %>
+                  <% else %>
+                    <%= link_to '★', answers_favorite_path(:id => @question, :answer => c), :style => 'color:green' %>
+                  <% end %>
+                <% end %>
                 <b>Score: </b><%= c.score %>
                 <%= link_to '⬆', answers_up_path(:id => @question, :answer => c), :style => 'color:green' %>          
                 <%= link_to '⬇', answers_down_path(:id => @question, :answer => c), :style => 'color:red' %>

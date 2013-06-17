@@ -15,7 +15,7 @@ class AnswersController < ApplicationController
     @question = Question.find(params[:id])
     @answer = @question.answers.find(params[:answer])
     @answer.score += 1
-    @user = User.find(@question.user_id)
+    @user = User.find(@answer.user_id)
     @user.score += 1
     @user.save
 
@@ -31,13 +31,41 @@ class AnswersController < ApplicationController
     @question = Question.find(params[:id])
     @answer = @question.answers.find(params[:answer])
     @answer.score -= 1
-    @user = User.find(@question.user_id)
+    @user = User.find(@answer.user_id)
     @user.score -= 1
     @user.save
 
     respond_to do |format|
       if @answer.save
         format.html { redirect_to @question, notice: 'Voto actualizado.' }
+        format.json { render json: @question }
+      end
+    end
+  end
+
+  def favorite
+    @question = Question.find(params[:id])
+    @answer = @question.answers.find(params[:answer])
+    @old = @question.answers.where( :fav => 1 )
+
+    if @old[0]
+      @old[0].fav = 0
+      # @user = User.find(@old[0].user_id)
+      # @user.score -= 10
+      # @user.save
+      @old[0].score -= 1
+      @old[0].save
+    end
+
+    @answer.fav = 1
+    @answer.score += 1
+    # @user = User.find(@answer.user_id)
+    # @user.score += 10
+    # @user.save
+    
+    respond_to do |format|
+      if @answer.save
+        format.html { redirect_to @question, notice: 'Respuesta actualizada.' }
         format.json { render json: @question }
       end
     end
@@ -80,6 +108,7 @@ class AnswersController < ApplicationController
     @answer = @question.answers.new(params[:answer])
     @answer.user = current_user
     @answer.score = 0
+    @answer.fav = 0
     @user = User.find(@question.user_id)
 
     respond_to do |format|

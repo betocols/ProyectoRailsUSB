@@ -11,6 +11,8 @@ DAnswer::Application.routes.draw do
 
   get "answers/down"
 
+  get "answers/favorite"
+
   get "home/index"
   get 'tags/:tag', to: 'questions#index', as: :tag
   get 'tags/', to: 'tags#index'

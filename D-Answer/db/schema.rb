@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130613161960) do
+ActiveRecord::Schema.define(:version => 20130617212405) do
 
   create_table "answers", :force => true do |t|
     t.integer  "user_id"
@@ -21,6 +21,7 @@ ActiveRecord::Schema.define(:version => 20130613161960) do
     t.integer  "score"
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
+    t.integer  "fav"
   end
 
   add_index "answers", ["question_id"], :name => "index_answers_on_question_id"
@@ -105,5 +106,10 @@ ActiveRecord::Schema.define(:version => 20130613161960) do
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true
   add_index "users", ["reset_password_token"], :name => "index_users_on_reset_password_token", :unique => true
+
+  create_table "users_questions", :force => true do |t|
+    t.integer "user_id"
+    t.integer "questions_id"
+  end
 
 end

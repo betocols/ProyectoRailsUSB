@@ -5,5 +5,5 @@ class Answer < ActiveRecord::Base
   
   has_many :comment_as, :class_name => "CommentA", :inverse_of => :answer
   
-  attr_accessible :answered_on, :content, :score
+  attr_accessible :answered_on, :content, :score, :fav
 end
