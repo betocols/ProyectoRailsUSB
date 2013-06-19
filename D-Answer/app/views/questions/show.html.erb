@@ -75,17 +75,19 @@
         <% end %>
       <% end %>
 
-      <div style="padding-top:20px;border-top:4px dotted #999;margin-left:20px;margin-right: 353px;">
-        <spam style="margin-left:20px;font-style:italic"><b> Deja tu comentario </b></spam>
-        <%= form_for [@question, @question.comment_qs.build] do |f| %>
-          <div class="field">
-            <%= f.text_area :content, :cols => 70, :rows => 3, :placeholder => "Agrega un comentario." %>
-          </div>
-          <div class="actions">
-            <%= f.submit "Comentar"%>
-          </div>
-        <% end %>
-      </div>
+      <% if user_signed_in? && current_user.role =="user" %>
+	<div style="padding-top:20px;border-top:4px dotted #999;margin-left:20px;margin-right: 353px;">
+	  <spam style="margin-left:20px;font-style:italic"><b> Deja tu comentario </b></spam>
+	  <%= form_for [@question, @question.comment_qs.build] do |f| %>
+	    <div class="field">
+	      <%= f.text_area :content, :cols => 70, :rows => 3, :placeholder => "Agrega un comentario." %>
+	    </div>
+	    <div class="actions">
+	      <%= f.submit "Comentar"%>
+	    </div>
+	  <% end %>
+	</div>
+      <% end %>
     </div>
   </div>
 
@@ -154,6 +156,7 @@
       <% end %>
     <% end %>
 
+    <% if user_signed_in? && current_user.role =="user" %>
     <div style="padding-top:20px;border-top:4px dotted #2a638f;margin-left:20px;margin-right: 470px;">
       <spam style="margin-left:20px;font-style:italic"><b> Deja tu respuesta </b></spam>
       <%= form_for [@question, @question.answers.build] do |f| %>
@@ -165,6 +168,7 @@
         </div>
       <% end %>
     </div>
+    <% end %>
   </div>
 </div>
 
