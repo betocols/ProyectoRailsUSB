@@ -49,7 +49,6 @@
         <%= link_to content_tag(:li, 'Preguntas', :class => "nav"), questions_path %>
         <%= link_to content_tag(:li, 'Tags', :class => "nav"), tags_path %>
         <% if current_user.role == "admin" %>
-          <%= link_to content_tag(:li, 'Mis Preguntas', :class => "nav"), questions_path %>
           <%= link_to content_tag(:li, 'Listar Usuarios', :class => "nav", :id => "last"), users_path %>
         <% else %>
           <%= link_to content_tag(:li, 'Mis Preguntas', :class => "nav", :id => "last"), my_questions_index_path %>
