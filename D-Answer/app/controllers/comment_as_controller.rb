@@ -26,9 +26,10 @@ class CommentAsController < ApplicationController
   # GET /comment_as/new
   # GET /comment_as/new.json
   def new
-    @comment_a = CommentA.new
+    @question = Question.find(params[:question_id])
+    @answer = @question.answers.find(params[:answer_id])
     authorize! :create, @comment_a
-
+    
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @comment_a }
@@ -44,7 +45,9 @@ class CommentAsController < ApplicationController
   # POST /comment_as
   # POST /comment_as.json
   def create
-    @comment_a = CommentA.new(params[:comment_a])
+    @question = Question.find(params[:question_id])
+    @answer = @question.answers.find(params[:answer_id])
+    @comment_a = @answer.comment_as.new(params[:comment_a])
     @user = User.find(@question.user_id)
 
     respond_to do |format|
