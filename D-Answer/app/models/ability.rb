@@ -7,7 +7,7 @@ class Ability
         can [:read, :update, :destroy, :create], User#, Tutorial]
         can [:read, :destroy], [Question, CommentA, CommentQ, Answer]
         cannot :create, Answer
-    else user.role == "user"
+    elsif user.role == "user"
         can [:create, :read], [Question, Answer, CommentA, CommentQ]
         can :update, [User, Answer, CommentA, CommentQ]
         can :read, User
