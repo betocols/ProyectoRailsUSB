@@ -28,6 +28,7 @@ class CommentAsController < ApplicationController
   def new
     @question = Question.find(params[:question_id])
     @answer = @question.answers.find(params[:answer_id])
+    @comment_a = CommentA.new()
     authorize! :create, @comment_a
     
     respond_to do |format|

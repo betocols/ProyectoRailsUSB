@@ -1,4 +1,4 @@
-<%= semantic_form_for @comment_a do |f| %>
+<%= semantic_form_for [@question, @answer, @comment_a] do |f| %>
   <% if @comment_a.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@comment_a.errors.count, "error") %> prohibited this comment_a from being saved:</h2>
@@ -19,7 +19,7 @@
 <div style="border">
   <div style="font-size:small;margin-left:120px">
     <h2>Comentarios </h2>
-    <% @question.answers.comment_as.each do |c| %>
+    <% @answer.comment_as.each do |c| %>
       <% if c.content %>
         <li>
           <p>

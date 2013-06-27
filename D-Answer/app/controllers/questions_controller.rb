@@ -50,7 +50,7 @@ before_filter :is_owner, :only => [:edit]
   # GET /questions/1.json
   def show
     @question = Question.find(params[:id])
-    authorize! :read, @question
+    #authorize! :read, @question
 
     respond_to do |format|
       format.html # show.html.erb

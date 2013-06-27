@@ -1,4 +1,5 @@
 class TagsController < ApplicationController
+
   # GET /tags
   # GET /tags.json
   def index
