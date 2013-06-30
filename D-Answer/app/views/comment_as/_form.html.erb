@@ -10,10 +10,6 @@
       </ul>
     </div>
   <% end %>
-
-  <div class="actions">
-    <%= f.submit %>
-  </div>
 <% end %>
 
 <div style="border">
@@ -24,13 +20,12 @@
         <li>
           <p>
             <%= c.content %>
-            <%= link_to 'Destroy', [@question, c], method: :delete, :class => 'boton', data: { confirm: 'Are you sure?'}%>
           </p>
         </li>
       <% end %>
     <% end %>
 
-    <%= form_for [@question, @question.comment_qs.build] do |f| %>
+    <%= form_for [@question, @answer, @answer.comment_as.build] do |f| %>
       <div class="field">
         <%= f.text_area :content, :cols => 70, :rows => 5, :placeholder => "Agrega un comentario." %>
       </div>
