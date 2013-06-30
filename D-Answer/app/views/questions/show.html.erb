@@ -149,13 +149,13 @@
               </div>
               <div style="margin:20px 20px">
                 <%= c.content %>
-                <!-- Esta linea da error 153-->
-                <% @question.answer.comment_as.each do |t| %>
+                <% c.comment_as.each do |t| %>
                   <% if t.content %>
-                    <li style="list-style:none;border-top:1px solid #999">
+                    <div style="font-size:small;margin-left:120px;border-top:5px double #999">
                       <p>
                         <div style="font-style:italic">
-                          <b>Autor:</b> <%= User.find(t.user_id).login %>
+                          <!-- Esta linea da error 158-->
+                          <b>Autor:</b> <%= User.find(c.user_id).login %>
                           <b> | Fecha: </b>
                           <%= t.created_at.day %>/<%= t.created_at.month %>/<%= t.created_at.year %>
                           <%= t.created_at.strftime("%I:%M%p") %>
@@ -166,7 +166,7 @@
                           <%= t.content %>
                         </div>
                       </p>
-                    </li>
+                    </div>  
                   <% end %>
                 <% end %>
               </div>
