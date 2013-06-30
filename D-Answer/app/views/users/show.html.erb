@@ -1,0 +1,76 @@
+<div style="margin-left:80px;height:40px ;">
+  <div style="display:inline-block;border-bottom:1px solid #3b88c0;float:left">
+    <b>Usuario:</b> 
+    <div class="title" style="margin-left:10px;border-bottom:none">
+      <%= @user.login %>
+    </div>
+  </div>
+  <div style="margin-left:10px;margin-top:15px;float:left">
+    <%= link_to 'Editar', edit_user_path(@user), :class => 'boton'%>
+    <%= link_to 'Volver', users_path, :class => 'boton'%>
+  </div>
+</div>
+
+
+<table id="show_user">
+  <tr>
+    <td>
+      <b> Nombre: </b>  
+      <%= @user.name %>
+    </td>
+    <td>
+      <b> Apellido: </b>
+      <%= @user.lastname %>
+    </td>
+  </tr>
+  <tr>
+    <td >
+      <b> Email: </b>  
+      <%= @user.email %>
+    </td>
+    <td>
+      <b> Score: </b>
+      <%= @user.score %>
+    </td>
+  </tr>
+  </tr>
+</table>
+
+<% if current_user && current_user.role != "admin" %>  
+  <div id="todas">
+    <div class="title">Mis Preguntas</div>
+    <%= link_to 'Nueva Pregunta', new_question_path, :class => 'boton', :style => "float:right;margin-top:15px;margin-right:50px"%>
+
+
+      <table class="list_questions">
+
+        <% if !@question.blank? %>
+          <% @question.sort {|a,b| b.created_at <=> a.created_at }.each do |question| %>
+          <tr>
+              <td id="titulo">
+                <%= link_to question.title, question, :title => question.title %>
+              </td>
+              
+              <td>
+                <%= question.created_at.day %>/<%= question.created_at.month %>/<%= question.created_at.year %>
+                &nbsp  &nbsp
+                <%= question.created_at.strftime("%I:%M%p") %>
+              </td>
+              
+              <td id="last_row">
+                <%= link_to 'X', question, method: :delete, data: { confirm: 'Are you sure?' }, :style=> 'color:red' %>
+              </td>
+            </tr>
+          <% end %>
+        <% else %>
+          <tr>
+            <td>
+            No has hecho ninguna pregunta.
+            </td>
+          </tr>
+        <% end %>
+
+
+      </table>
+  </div>
+<% end %>

@@ -1,0 +1,11 @@
+<% if current_user && current_user.role == "admin" %>
+  <div class="title">Crear Nuevo Admin</div> 
+  <%= link_to 'Volver', users_path, :class => 'boton' %>
+  <%= render 'form' %>
+<% else %>
+  <div style="width:100%;text-align:center;margin-top:30px">
+    <h2> Debe ser admin para poder crear otros usuarios. </h2>
+    <%= link_to 'Volver', questions_path, :class => 'boton' %>
+  </div>
+<% end %>
+

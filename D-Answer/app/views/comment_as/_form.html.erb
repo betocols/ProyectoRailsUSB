@@ -1,0 +1,41 @@
+<%= semantic_form_for [@question, @answer, @comment_a] do |f| %>
+  <% if @comment_a.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@comment_a.errors.count, "error") %> prohibited this comment_a from being saved:</h2>
+
+      <ul>
+      <% @comment_a.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
+
+<div style="border">
+  <div style="font-size:small;margin-left:120px">
+    <h2>Comentarios </h2>
+    <% @answer.comment_as.each do |c| %>
+      <% if c.content %>
+        <li>
+          <p>
+            <%= c.content %>
+          </p>
+        </li>
+      <% end %>
+    <% end %>
+
+    <%= form_for [@question, @answer, @answer.comment_as.build] do |f| %>
+      <div class="field">
+        <%= f.text_area :content, :cols => 70, :rows => 5, :placeholder => "Agrega un comentario." %>
+      </div>
+      <div class="actions">
+        <%= f.submit %>
+      </div>
+    <% end %>
+  </div>
+</div>

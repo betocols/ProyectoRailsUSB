@@ -1,0 +1,74 @@
+#show_user { 
+  min-width:400px;
+  margin-top:10px;
+  margin-bottom:20px;
+  margin-left:100px
+}
+
+#show_user td {
+  height:50px;
+}
+
+#show_user th { 
+  padding:5px;
+  background-color:#3b88c0;
+  color:white;
+}
+
+.title_usuario {
+  margin-left:120px;
+  border-bottom:1px solid #3b88c0;
+  
+}
+
+#boton_user {
+  margin-top: 10px;
+  float:right;
+}
+
+#volver {
+  margin-left:120px;
+}
+
+.list_users {
+  margin:20px auto; 
+  border-collapse:collapse;
+  min-width:900px
+
+}
+
+.list_users td, th {
+  border-top:1px solid #3b88c0;
+}
+
+.list_users th { 
+  padding:5px;
+  background-color:#3b88c0;
+  color:white;
+}
+
+.list_users   td {
+  text-align: center;
+  padding:10px 0px;
+}
+
+.create_user {
+  margin:20px; 
+  margin:auto;
+  border-collapse:collapse;
+  width:500px;
+}
+
+.create_user, td, th {
+  padding:15px;
+}
+
+.create_user td {
+  width:200px;
+}
+
+.create_user th { 
+  padding:5px;
+  background-color:green;
+  color:white;
+}

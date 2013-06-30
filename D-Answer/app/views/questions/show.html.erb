@@ -1,0 +1,174 @@
+<div>
+  <div style="border-bottom:1px solid #2a638f">
+    <div class="title" style="border-bottom:none"> <%= @question.title %> </div>
+    <div style="float:right;margin-top:10px;margin-right:30px;">
+      <% if current_user == User.find(@question.user_id) %>
+        <%= link_to 'Editar', edit_question_path(@question), :class => 'boton' %>
+      <% end %>
+      <%= link_to 'Volver', questions_path, :class => 'boton' %>
+    </div>
+  </div>
+  
+  <div class="question_info">
+      <div>
+        <b>Fecha creación:</b>
+        <%= @question.created_at.day %>/<%= @question.created_at.month %>/<%= @question.created_at.year %>
+        <%= @question.created_at.strftime("%I:%M%p") %>
+      </div>
+      <div>
+        <b>Autor:</b> <%= User.find(@question.user_id).login %>
+      </div>
+  </div>
+  
+  <table id="table_question">
+    <tr>
+      <td>
+        <b>Score:</b> 
+      </td>
+      <td>
+        <%= @question.score %>
+          <%= link_to '⬆', questions_up_path(:id => @question), :style => 'color:green' %>          
+          <%= link_to '⬇', questions_down_path(:id => @question), :style => 'color:red' %>
+        
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <b> Tags: </b>
+      </td>
+      <td>  
+        <%= raw @question.tag_list.map { |t| link_to t, tag_path(t)}.join(', ') %>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">
+        <b> Pregunta: </b>
+      </td>
+      <td style="text-align:justify;">  
+        <%= @question.content %>
+      </td>
+    </tr>
+  </table>
+
+  <div>
+    <div style="font-size:small;margin-left:120px;border-top:5px double #999">
+      
+      <h3 style="margin-left: 20px;"> <%= @question.comment_qs.size %> Comentario(s) </h3>
+      
+      <% @question.comment_qs.each do |c| %>
+        <% if c.content %>
+          <li style="list-style:none;border-top:1px solid #999">
+            <p>
+              <div style="font-style:italic">
+                <b>Autor:</b> <%= User.find(c.user_id).login %>
+                <b> | Fecha: </b>
+                <%= c.created_at.day %>/<%= c.created_at.month %>/<%= c.created_at.year %>
+                <%= c.created_at.strftime("%I:%M%p") %>
+                <spam style="float:right;font-style:normal">
+                </spam>
+              </div>
+              <div style="margin:20px 20px">
+                <%= c.content %>
+              </div>
+            </p>
+          </li>
+        <% end %>
+      <% end %>
+
+      <% if user_signed_in? && current_user.role =="user" %>
+	<div style="padding-top:20px;border-top:4px dotted #999;margin-left:20px;margin-right: 353px;">
+	  <spam style="margin-left:20px;font-style:italic"><b> Deja tu comentario </b></spam>
+	  <%= form_for [@question, @question.comment_qs.build] do |f| %>
+	    <div class="field">
+	      <%= f.text_area :content, :cols => 70, :rows => 3, :placeholder => "Agrega un comentario." %>
+	    </div>
+	    <div class="actions">
+	      <%= f.submit "Comentar"%>
+	    </div>
+	  <% end %>
+	</div>
+      <% end %>
+    </div>
+  </div>
+
+<div style="border-top: 10px double #2a638f;margin-top: 20px;">
+  <% @question.answers.where( :fav => 1 ).each do |fav| %>
+      <% if fav.content %>
+        <li style="list-style:none">
+          <p>
+            <div style="font-style:italic">
+              <div style="text-align: center;background-color: green;color:white;margin-bottom: 5px;"> 
+                ★ Respuesta aceptada por el usuario ★ 
+              </div>
+              <b>Autor:</b> <%= User.find(fav.user_id).login %>
+              <b> | Fecha: </b>
+              <%= fav.created_at.day %>/<%= fav.created_at.month %>/<%= fav.created_at.year %>
+              <%= fav.created_at.strftime("%I:%M%p") %>
+
+              <spam style="float:right;font-style:normal">
+                <% if current_user == User.find(@question.user_id) %> 
+                  <%= link_to '★', answers_favorite_path(:id => @question, :answer => fav), :style => 'color:green' %>
+                <% end %>
+                <b>Score: </b><%= fav.score %>
+                <%= link_to '⬆', answers_up_path(:id => @question, :answer => fav), :style => 'color:green' %>          
+                <%= link_to '⬇', answers_down_path(:id => @question, :answer => fav), :style => 'color:red' %>
+                <%= link_to 'Comentar', new_question_answer_comment_as_path(@question, fav), :class => 'boton' %>
+              </spam>
+            </div>
+            <div style="margin:20px 20px">
+              <%= fav.content %>
+            </div>
+            <div style="text-align: center;background-color: green;height:10px"> </div>
+          </p>
+        </li>
+      <% end %>
+    <% end %>
+
+  <h2 style="color:#2a638f;margin-left:30px"> <%= @question.answers.size %> Respuesta(s) </h2>
+  <div>
+    <% @question.answers.sort {|a,b| b.score <=> a.score }.each do |c| %>
+      <% if c.fav != 1 %>
+        <% if c.content %>
+          <li style="list-style:none;border-top:1px solid #2a638f">
+            <p>
+              <div style="font-style:italic">
+                <b>Autor:</b> <%= User.find(c.user_id).login %>
+                <b> | Fecha: </b>
+                <%= c.created_at.day %>/<%= c.created_at.month %>/<%= c.created_at.year %>
+                <%= c.created_at.strftime("%I:%M%p") %>
+
+                <spam style="float:right;font-style:normal">
+                  <% if current_user == User.find(@question.user_id) %> 
+                      <%= link_to '⭐', answers_favorite_path(:id => @question, :answer => c), :style => 'color:green' %>
+                  <% end %>
+                  <b>Score: </b><%= c.score %>
+                  <%= link_to '⬆', answers_up_path(:id => @question, :answer => c), :style => 'color:green' %>          
+                  <%= link_to '⬇', answers_down_path(:id => @question, :answer => c), :style => 'color:red' %>
+                  <%= link_to 'Comentar', new_question_answer_comment_as_path(@question, c), :class => 'boton' %>
+                </spam>
+              </div>
+              <div style="margin:20px 20px">
+                <%= c.content %>
+              </div>
+            </p>
+          </li>
+        <% end %>
+      <% end %>
+    <% end %>
+
+    <% if user_signed_in? && current_user.role =="user" %>
+    <div style="padding-top:20px;border-top:4px dotted #2a638f;margin-left:20px;margin-right: 470px;">
+      <spam style="margin-left:20px;font-style:italic"><b> Deja tu respuesta </b></spam>
+      <%= form_for [@question, @question.answers.build] do |f| %>
+        <div class="field">
+          <%= f.text_area :content, :cols => 70, :rows => 5, :placeholder => "Responde la pregunta." %>
+        </div>
+        <div class="actions">
+          <%= f.submit "Responder" %>
+        </div>
+      <% end %>
+    </div>
+    <% end %>
+  </div>
+</div>
+
