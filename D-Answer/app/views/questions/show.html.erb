@@ -149,6 +149,26 @@
               </div>
               <div style="margin:20px 20px">
                 <%= c.content %>
+                <!-- Esta linea da error 153-->
+                <% @question.answer.comment_as.each do |t| %>
+                  <% if t.content %>
+                    <li style="list-style:none;border-top:1px solid #999">
+                      <p>
+                        <div style="font-style:italic">
+                          <b>Autor:</b> <%= User.find(t.user_id).login %>
+                          <b> | Fecha: </b>
+                          <%= t.created_at.day %>/<%= t.created_at.month %>/<%= t.created_at.year %>
+                          <%= t.created_at.strftime("%I:%M%p") %>
+                          <spam style="float:right;font-style:normal">
+                          </spam>
+                        </div>
+                        <div style="margin:20px 20px">
+                          <%= t.content %>
+                        </div>
+                      </p>
+                    </li>
+                  <% end %>
+                <% end %>
               </div>
             </p>
           </li>

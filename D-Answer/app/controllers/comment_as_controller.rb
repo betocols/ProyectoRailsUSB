@@ -54,8 +54,8 @@ class CommentAsController < ApplicationController
     respond_to do |format|
       if @comment_a.save
         UserMailer.commentas_email(@user).deliver
-        format.html { redirect_to @comment_a, notice: 'Comentario creado correctamente.' }
-        format.json { render json: @comment_a, status: :created, location: @comment_a }
+        format.html { redirect_to @question, notice: 'Comentario creado correctamente.' }
+        format.json { render json: @question, status: :created, location: @comment_a }
       else
         format.html { render action: "new" }
         format.json { render json: @comment_a.errors, status: :unprocessable_entity }

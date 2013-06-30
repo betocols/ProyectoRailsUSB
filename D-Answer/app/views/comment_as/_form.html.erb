@@ -10,10 +10,6 @@
       </ul>
     </div>
   <% end %>
-
-  <div class="actions">
-    <%= f.submit %>
-  </div>
 <% end %>
 
 <div style="border">
@@ -34,7 +30,7 @@
         <%= f.text_area :content, :cols => 70, :rows => 5, :placeholder => "Agrega un comentario." %>
       </div>
       <div class="actions">
-        <%= f.submit %>
+        <%= f.submit "Comentar" %>
       </div>
     <% end %>
   </div>
