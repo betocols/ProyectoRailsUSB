@@ -155,7 +155,7 @@
                       <p>
                         <div style="font-style:italic">
                           <!-- Esta linea da error 158-->
-                          <b>Autor:</b> <%= User.find(c.user_id).login %>
+                          <b>Autor:</b> <%= User.find(t.user_id).login %>
                           <b> | Fecha: </b>
                           <%= t.created_at.day %>/<%= t.created_at.month %>/<%= t.created_at.year %>
                           <%= t.created_at.strftime("%I:%M%p") %>

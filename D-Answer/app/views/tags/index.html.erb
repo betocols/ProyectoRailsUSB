@@ -1,11 +1,20 @@
 <div class="title">Tags</div>
 
 <table style="margin-top: 20px;width:1000px;text-align:center">
-  <% @tags.in_groups_of(10, false) do |row| %>
-    <tr style="width:100px">
-      <% for tag in row %>
-        <td><%= link_to tag.name, tag_path(tag.name) %></td>
-      <% end %>
-    </tr>
-  <% end %>
+  <% if !@tags.blank? %>
+    <% @tags.in_groups_of(10, false) do |row| %>
+      <tr style="width:100px">
+	<% for tag in row %>
+	  <td><%= link_to tag.name, tag_path(tag.name) %></td>
+	<% end %>
+      </tr>
+    <% end %>
+  <% else %>
+        <tr>
+          <td>
+            No hay etiquetas en la base de datos.
+          </td>
+        </tr>  
+        <% end %>
+    </table>
 </table>

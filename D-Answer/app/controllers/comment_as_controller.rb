@@ -49,6 +49,7 @@ class CommentAsController < ApplicationController
     @question = Question.find(params[:question_id])
     @answer = @question.answers.find(params[:answer_id])
     @comment_a = @answer.comment_as.new(params[:comment_a])
+    @comment_a.user = current_user
     @user = User.find(@question.user_id)
 
     respond_to do |format|
