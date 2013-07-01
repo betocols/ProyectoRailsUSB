@@ -14,9 +14,9 @@ class AnswersController < ApplicationController
   def up
     @question = Question.find(params[:id])
     @answer = @question.answers.find(params[:answer])
-    @answer.score += 1
+    @answer.score = @answer.score + 1
     @user = User.find(@answer.user_id)
-    @user.score += 1
+    @user.score = @answer.score + 1
     @user.save
 
     respond_to do |format|
@@ -30,9 +30,9 @@ class AnswersController < ApplicationController
   def down
     @question = Question.find(params[:id])
     @answer = @question.answers.find(params[:answer])
-    @answer.score -= 1
+    @answer.score = @answer.score - 1
     @user = User.find(@answer.user_id)
-    @user.score -= 1
+    @user.score = @answer.score - 1
     @user.save
 
     respond_to do |format|
