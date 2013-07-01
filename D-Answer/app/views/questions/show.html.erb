@@ -117,6 +117,25 @@
             </div>
             <div style="margin:20px 20px">
               <%= fav.content %>
+              <% fav.comment_as.each do |t| %>
+                <% if t.content %>
+                  <div style="font-size:small;margin-left:120px;border-top:5px double #999">
+                    <p>
+                      <div style="font-style:italic">
+                        <b>Autor:</b> <%= User.find(t.user_id).login %>
+                        <b> | Fecha: </b>
+                        <%= t.created_at.day %>/<%= t.created_at.month %>/<%= t.created_at.year %>
+                        <%= t.created_at.strftime("%I:%M%p") %>
+                        <spam style="float:right;font-style:normal">
+                        </spam>
+                      </div>
+                      <div style="margin:20px 20px">
+                        <%= t.content %>
+                      </div>
+                    </p>
+                  </div>  
+                <% end %>
+              <% end %>
             </div>
             <div style="text-align: center;background-color: green;height:10px"> </div>
           </p>
@@ -154,7 +173,6 @@
                     <div style="font-size:small;margin-left:120px;border-top:5px double #999">
                       <p>
                         <div style="font-style:italic">
-                          <!-- Esta linea da error 158-->
                           <b>Autor:</b> <%= User.find(t.user_id).login %>
                           <b> | Fecha: </b>
                           <%= t.created_at.day %>/<%= t.created_at.month %>/<%= t.created_at.year %>
