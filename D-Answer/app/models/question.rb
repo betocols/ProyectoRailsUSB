@@ -1,4 +1,7 @@
 class Question < ActiveRecord::Base
+  has_many :votequestions
+  has_many :users, :through => :votequestions
+
   belongs_to :user
   
   has_many :answers, :dependent => :destroy
@@ -24,5 +27,4 @@ class Question < ActiveRecord::Base
       find(:all)
     end
   end
-
 end

@@ -8,11 +8,22 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
   
+  has_many :votequestions
+  has_many :questions, :through => :votequestions
+
+  has_many :voteanswers
+  has_many :answers, :through => :voteanswers
+
   has_many :questions, :class_name => "Question"
   has_many :answers, :class_name => "Answer"
   has_many :commentqs, :class_name => "CommentQ"
   has_many :commentas, :class_name => "CommentA"
   
+  has_attached_file :pic, :styles => { :small => "150x150>" },
+                          :url  => "/assets/products/:id/:style/:basename.:extension",
+                          :path => ":rails_root/public/assets/products/:id/:style/:basename.:extension"
+
+
   ROLES = %w[admin user]
 
   include RoleModel 
@@ -20,7 +31,7 @@ class User < ActiveRecord::Base
   
   # Setup accessible (or protected) attributes for your model
   attr_accessible :email, :password, :password_confirmation, :remember_me
-  attr_accessible :login, :name, :lastname, :bio, :rating, :role, :score
+  attr_accessible :login, :name, :lastname, :bio, :rating, :role, :score, :pic
     
   # optionally set the integer attribute to store the roles in,
   # :roles_mask is the default

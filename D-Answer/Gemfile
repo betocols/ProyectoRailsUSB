@@ -58,3 +58,6 @@ gem 'will_paginate'
 
 #Para los tags
 gem 'acts-as-taggable-on'
+
+#Foto usuario
+gem "paperclip", "~> 3.0"

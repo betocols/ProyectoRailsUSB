@@ -1,3 +1,4 @@
+#encoding: UTF-8
 class QuestionsController < ApplicationController
 before_filter :authenticate_user!, :only => [:new, :create, :destroy]
 before_filter :is_owner, :only => [:edit]
@@ -18,31 +19,69 @@ before_filter :is_owner, :only => [:edit]
 
   def up
     @question = Question.find(params[:id])
-    @question.score += 1
-    @user = User.find(@question.user_id)
-    @user.score += 1
-    @user.save
+    v = Votequestion.where(:question_id => @question.id, :user_id => current_user)    
 
-    respond_to do |format|
-      if @question.save
-        format.html { redirect_to @question, notice: 'Voto actualizado.' }
-        format.json { render json: @question }
+    if v.length > 0
+      nuevo = v[0]
+      case nuevo.vote.to_i
+      when -1
+        valor = 0
+      when 0
+        valor = 1
+      when 1
+        redirect_to question_path(@question.id), notice: 'Solo puede votar 1 vez.'
+        return
       end
+    else
+      nuevo = Votequestion.new(:user_id => current_user.id, :question_id => @question.id, :vote => 1)
+      valor = 1
+      if not nuevo.save
+        redirect_to question_path(@question.id), notice: 'Error intente más tarde.'
+      end
+    end
+
+    user = User.find(@question.user_id)
+    score = @question.score + 1
+    uscore = user.score + 1
+    if @question.update_attribute('score', score) and user.update_attribute('score', uscore) and nuevo.update_attribute('vote',valor)
+      
+      redirect_to @question, notice: 'Voto actualizado.'
+    else
+      redirect_to @question, notice: 'Error intente más tarde.'
     end
   end
 
+
   def down
     @question = Question.find(params[:id])
-    @question.score -= 1
-    @user = User.find(@question.user_id)
-    @user.score -= 1
-    @user.save
+    v = Votequestion.where(:question_id => @question.id, :user_id => current_user)
 
-    respond_to do |format|
-      if @question.save
-        format.html { redirect_to @question, notice: 'Voto actualizado.' }
-        format.json { render json: @question }
+    if v.length > 0
+      nuevo = v[0]
+      case nuevo.vote.to_i
+      when 1
+        valor = 0
+      when 0
+        valor = -1
+      when -1
+        redirect_to question_path(@question.id), notice: 'Sólo puede votar 1 vez.'
+        return
       end
+    else
+      nuevo = Votequestion.new(:user_id => current_user.id, :question_id => @question.id, :vote => -1)
+      valor = -1
+      if not nuevo.save
+        redirect_to question_path(@question.id), notice: 'Error intente más tarde.'
+      end
+    end
+
+    user = User.find(@question.user_id)
+    score = @question.score - 1
+    uscore = user.score - 1
+    if @question.update_attribute('score', score) and user.update_attribute('score', uscore) and nuevo.update_attribute('vote',valor)      
+      redirect_to @question, notice: 'Voto actualizado.'
+    else
+      redirect_to @question, notice: 'Error intente más tarde.'
     end
   end
 

@@ -39,7 +39,7 @@
     </tr>
     <%= f.hidden_field :score, :value => "0" %></div>
     <tr>
-      <td colspan="2" style="text-align:center">
+      <td style="text-align:center">
         <div><%= f.label :rol %><br />
         <%= f.collection_select :role, User::ROLES, :to_s, :humanize %></div>
       </td>

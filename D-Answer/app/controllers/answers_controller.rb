@@ -1,3 +1,4 @@
+#encoding: UTF-8
 class AnswersController < ApplicationController
   before_filter :authenticate_user!, :only => [:new, :create, :destroy]
   # GET /answers
@@ -14,32 +15,68 @@ class AnswersController < ApplicationController
   def up
     @question = Question.find(params[:id])
     @answer = @question.answers.find(params[:answer])
-    @answer.score = @answer.score + 1
-    @user = User.find(@answer.user_id)
-    @user.score = @answer.score + 1
-    @user.save
+    v = Voteanswer.where(:user_id => current_user, :answer_id => @answer.id)
 
-    respond_to do |format|
-      if @answer.save
-        format.html { redirect_to @question, notice: 'Voto actualizado.' }
-        format.json { render json: @question }
+    if v.length > 0
+      nuevo = v[0]
+      case nuevo.vote.to_i
+      when -1
+        valor = 0
+      when 0
+        valor = 1
+      when 1
+        redirect_to question_path(@question.id), notice: 'Sólo puede votar 1 vez.'
+        return
       end
+    else
+      nuevo = Voteanswer.new(:user_id => current_user.id, :answer_id => @answer.id, :vote => 1)
+      valor = 1
+      if not nuevo.save
+        redirect_to question_path(@question.id), notice: 'Error intente más tarde.'
+      end
+    end
+
+    user = User.find(@answer.user_id)
+    score = @answer.score + 1
+    uscore = user.score + 1
+    if @answer.update_attribute('score', score) and user.update_attribute('score', uscore) and nuevo.update_attribute('vote',valor)      
+      redirect_to @question, notice: 'Voto actualizado.'
+    else
+      redirect_to @question, notice: 'Error intente más tarde.'
     end
   end
 
   def down
     @question = Question.find(params[:id])
     @answer = @question.answers.find(params[:answer])
-    @answer.score = @answer.score - 1
-    @user = User.find(@answer.user_id)
-    @user.score = @answer.score - 1
-    @user.save
+    v = Voteanswer.where(:user_id => current_user, :answer_id => @answer.id)
 
-    respond_to do |format|
-      if @answer.save
-        format.html { redirect_to @question, notice: 'Voto actualizado.' }
-        format.json { render json: @question }
+    if v.length > 0
+      nuevo = v[0]
+      case nuevo.vote.to_i
+      when 1
+        valor = 0
+      when 0
+        valor = -1
+      when -1
+        redirect_to question_path(@question.id), notice: 'Sólo puede votar 1 vez.'
+        return
       end
+    else
+      nuevo = Voteanswer.new(:user_id => current_user.id, :answer_id => @answer.id, :vote => -1)
+      valor = -1
+      if not nuevo.save
+        redirect_to question_path(@question.id), notice: 'Error intente más tarde.'
+      end
+    end
+
+    user = User.find(@answer.user_id)
+    score = @answer.score - 1
+    uscore = user.score - 1
+    if @answer.update_attribute('score', score) and user.update_attribute('score', uscore) and nuevo.update_attribute('vote',valor)      
+      redirect_to @question, notice: 'Voto actualizado.'
+    else
+      redirect_to @question, notice: 'Error intente más tarde.'
     end
   end
 

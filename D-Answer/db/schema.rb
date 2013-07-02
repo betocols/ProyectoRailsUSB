@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130617212405) do
+ActiveRecord::Schema.define(:version => 20130702010235) do
 
   create_table "answers", :force => true do |t|
     t.integer  "user_id"
@@ -102,6 +102,10 @@ ActiveRecord::Schema.define(:version => 20130617212405) do
     t.string   "name"
     t.string   "lastname"
     t.integer  "score"
+    t.string   "pic_file_name"
+    t.string   "pic_content_type"
+    t.integer  "pic_file_size"
+    t.datetime "pic_updated_at"
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true
@@ -110,6 +114,22 @@ ActiveRecord::Schema.define(:version => 20130617212405) do
   create_table "users_questions", :force => true do |t|
     t.integer "user_id"
     t.integer "questions_id"
+  end
+
+  create_table "voteanswers", :force => true do |t|
+    t.integer  "user_id"
+    t.integer  "answer_id"
+    t.integer  "vote"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  create_table "votequestions", :force => true do |t|
+    t.integer  "user_id"
+    t.integer  "question_id"
+    t.integer  "vote"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
   end
 
 end
