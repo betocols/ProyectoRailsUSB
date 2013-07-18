@@ -19,7 +19,7 @@ class User < ActiveRecord::Base
   has_many :commentqs, :class_name => "CommentQ"
   has_many :commentas, :class_name => "CommentA"
   
-  has_attached_file :pic, :styles => { :small => "150x150>" },
+  has_attached_file :pic, :styles => { :small => "100x100>" },
                           :url  => "/assets/products/:id/:style/:basename.:extension",
                           :path => ":rails_root/public/assets/products/:id/:style/:basename.:extension"
 
